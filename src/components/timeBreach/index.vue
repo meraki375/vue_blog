@@ -25,9 +25,9 @@
 <script>
  import 'https://unpkg.com/kokomi.js/build/kokomi.umd.js';
  import 'https://unpkg.com/three@0.144.0/build/three.min.js';
-//  import 'https://unpkg.com/gsap@3.11.1/dist/gsap.min.js';
+ import 'https://unpkg.com/gsap@3.11.1/dist/gsap.min.js';
  import 'https://unpkg.com/lil-gui@0.17.0/dist/lil-gui.umd.min.js';
-//  import 'https://unpkg.com/ccapture.js@1.1.0/build/CCapture.all.min.js';
+ import 'https://unpkg.com/ccapture.js@1.1.0/build/CCapture.all.min.js';
  import {prepare} from './prepare.js';
   const joinLine = (arr) => arr.join("\n");
 
