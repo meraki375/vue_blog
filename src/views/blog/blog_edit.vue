@@ -9,7 +9,7 @@
 
       <div :key="current" :class="animatedName">
         <div v-show="current === 1" @next="next" class="flex">
-          <a-form :model="form" size="medium" auto-label-width>
+          <a-form :model="data.form" size="medium" auto-label-width>
             <a-form-item label="发布人" >
                <a-input v-model="userStore.username" placeholder="请输入发布人姓名" disabled/>
             </a-form-item>
@@ -35,24 +35,23 @@
             </a-form-item>
           </a-form>
         </div>
-        <div v-show="current === 2" :form="form" @next="next" @prev="prev" class="flex">
-          <a-form  size="medium" :model="form" auto-label-width>
+        <div v-show="current === 2" :form="data.form" @next="next" @prev="prev" class="flex">
+          <a-form  size="medium" :model="data.form" auto-label-width>
             <a-form-item label="标题" :rules="rules.title">
-              <a-input v-model="form.title" placeholder="请输入标题" />
+              <a-input v-model="data.form.title" placeholder="请输入标题" />
             </a-form-item>
             <a-form-item label="内容" >
-             <div class="editor">
-                <Toolbar style="border-bottom: 1px solid #ccc" :editor="editorRef" :defaultConfig="toolbarConfig" />
+              <div style="height: 500px;">
                 <Editor
-                  style="height: 500px; overflow-y: hidden"
-                  v-model="form.centent"
-                  :defaultConfig="editorConfig"
-                  @onCreated="handleCreated"
-                />
+                :formKey="'centent'"
+                :form="data.form"
+              >
+              </Editor>
               </div>
+            
             </a-form-item>
             <a-form-item label="分类" >
-              <a-select v-model="form.class"  placeholder="请选择分类"> 
+              <a-select v-model="data.form.class"  placeholder="请选择分类" > 
                 <a-option 
                   v-for="item in options"
                   :key="item.value"
@@ -62,7 +61,7 @@
               </a-select>
             </a-form-item>
             <a-form-item label="上下架" >
-              <a-switch v-model="form.status" :checked-value="1" :unchecked-value="0">
+              <a-switch v-model="data.form.status" :checked-value="1" :unchecked-value="0">
                 <template #checked>
                   上架
                 </template>
@@ -74,12 +73,12 @@
             <a-form-item>
               <div class="flex center">
                 <a-button @click="prev">上一步</a-button>
-                <a-button type="primary" :loading="loading" @click="next(form)">提交</a-button> 
+                <a-button type="primary" :loading="loading" @click="next(data.form)">提交</a-button> 
               </div>
             </a-form-item>
           </a-form>
         </div>
-        <div v-show="current === 3" :form="form" @again="current = 1">
+        <div v-show="current === 3" :form="data.form" @again="current = 1">
           <a-result status="success" title="操作成功">
             <template #subtitle>文章已发布</template>
           </a-result>
@@ -95,36 +94,31 @@
   </div>
 </template>
 
-<script setup lang="ts" name="Blog_edit"> 
-import type { ArticleForm } from './type'
+<script setup lang="ts" name="Blog_edit">
 import { useUserStore } from '@/store'
 import { editBlog, getBlog, getClassList } from '@/apis'
 import { onBeforeUnmount, ref, shallowRef, onMounted, watch, reactive } from 'vue'
-import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
-import {useRouter, useRoute } from 'vue-router'  
-import '@wangeditor/editor/dist/css/style.css' // 引入 css
-
-// 编辑器实例，必须用 shallowRef
-const editorRef = shallowRef()
+import {useRouter, useRoute } from 'vue-router'
 const router = useRouter() 
 const id = useRoute().query.id
-const toolbarConfig = {}
-const editorConfig = { placeholder: '请输入内容...' } 
+
 const current = ref(1)
 
-const form = ref<ArticleForm>({
-  title: '',
-  centent: '', 
-  class:[],
-  status:1
+const data = reactive({
+  form:{
+    title: '',
+    centent: '', 
+    class:[] as any,
+    status:1
+  }
 })
 const animatedName = ref('to-right')
 
 const loading = ref(false)
 
-const userStore = useUserStore().userInfo 
+const userStore:any = useUserStore().userInfo 
 
-const options = ref([]);
+const options = ref([] as any);
 
 const rules = {
   title: [{ required: true, message: '请输入标题' }],
@@ -134,8 +128,6 @@ const rules = {
 const next = async(form:any) => { 
   current.value++
   if (current.value === 3) {
-    console.log(form);
-    
     let params = {
       id:id,
       title: form?.title,
@@ -157,10 +149,6 @@ const back = () =>{
   router.back()
 } 
 
-const handleCreated = (editor: any) => {
-  editorRef.value = editor // 记录 editor 实例，重要！
-}
-
 watch(
   () => current.value,
   (newVal, oldVal) => {
@@ -171,12 +159,6 @@ watch(
     }
   }
 )
-// 组件销毁时，也及时销毁编辑器
-onBeforeUnmount(() => {
-  const editor = editorRef.value
-  if (editor == null) return
-  editor.destroy()
-})
 
 const init = async () =>{
   let params = {
@@ -185,11 +167,10 @@ const init = async () =>{
     q:''
   } 
   const ret = await getClassList(params)
-  console.log(ret);
   options.value = ret.list
   if(id){
-    const res = await getBlog()
-    form.value = res.article 
+    const res = await getBlog({id:id})
+    data.form = res.article 
   }
 }
 
@@ -197,19 +178,14 @@ init()
 </script>
 
 <style lang="scss" scoped>
-.flex{
-  margin-top:50px; 
-}
+// .flex{
+//   margin-top:50px; 
+// }
 .center{
   justify-content:space-around;
   width:100%;
 }
-.editor {
-  border: 1px solid var(--color-border-3);
-  &.w-e-full-screen-container {
-    z-index: 9999;
-  }
-}
+
 @keyframes toRight {
   0% {
     opacity: 0.5;
@@ -233,6 +209,7 @@ init()
 .to-right {
   animation-name: toRight;
   animation-duration: 0.5s;
+  margin-top:30px;
 }
 .to-left {
   animation-name: toLeft;
@@ -247,11 +224,12 @@ init()
   display: flex;
   justify-content: center;
   .form-box {
-    width: 50%;
+    width: 100%;
     min-width: 500px;
-    margin-top: 30px;
-    flex-shrink: 0;
-    position: relative;
+    margin: 30px 120px;
   }
+}
+.editor{
+  // margin-top:30px;
 }
 </style>

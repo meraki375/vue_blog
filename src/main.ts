@@ -33,6 +33,7 @@ app.use(createPinia())
 app.use(ArcoVue)
 app.use(ArcoVueIcon)
 app.use(directives)
+
 app.config.globalProperties.$moment = moment;
 // 全局注册自定义组件(注：一定要定义组件的name！！！)
 // 注意：目前已使用unplugin-vue-components插件实现自定义组件自动导入

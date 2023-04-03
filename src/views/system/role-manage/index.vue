@@ -70,7 +70,7 @@ const getTableData = async () => {
   try {
     loading.value = true
     const res = await getSystemRoleList()
-    if (res.success) {
+    if (res.code) {
       tableData.value = res.data.list
       total.value = res.data.total
       loading.value = false

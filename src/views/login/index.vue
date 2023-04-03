@@ -60,7 +60,10 @@ const navTabStore = useNavTabStore()
 
 const form: UserLoginParams = reactive({
   username: '',
-  password: ''
+  password: '',
+  avatar: '',
+  phone: '',
+  email: '',
 })
 
 // 记住密码

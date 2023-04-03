@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 const list = [
-  { name: '主控台', icon: 'icon-dashboard', color: 'rgb(104, 199, 85)' },
+  { name: '前台', icon: 'icon-dashboard', color: 'rgb(104, 199, 85)',path:'' },
   { name: '列表', icon: 'icon-list', color: 'rgb(250, 178, 81)' },
   { name: '表单', icon: 'icon-file', color: 'rgb(24, 144, 255)' },
   { name: '权限管理', icon: 'icon-mind-mapping', color: 'rgb(240, 107, 150)' },

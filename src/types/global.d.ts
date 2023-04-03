@@ -24,6 +24,9 @@ interface NavTabItem {
 
 // 接口返回数据格式
 interface HttpResponse<T = unknown> {
+article: { title: string; centent: string; class: any; status: number }
+list: { pageSize: number; current: number; q: string; date: string }[]
+count(count: any): unknown
   code: number
   message: string
   data: T

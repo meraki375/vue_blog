@@ -59,8 +59,8 @@ http.interceptors.request.use(
 http.interceptors.response.use(
   (response: AxiosResponse<HttpResponse>) => {
     const { data } = response
-    const { message, success } = data 
-    if (!success) {
+    const { message, code } = data 
+    if (!code) {
       NProgress.done()
       Notification.error(message || '服务器端错误')
       return Promise.reject(new Error('Error'))

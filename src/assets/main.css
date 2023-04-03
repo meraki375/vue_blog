@@ -1,8 +1,14 @@
 @charset "utf-8"; 
+@font-face {
+  font-family: 'qfont';
+  src: url('./font/Qfont.ttf');
+}
+* {
+  font-family: "qfont";
+}
 body {
   margin:0;padding:0;
-  line-height:1.5em;
-  font-family:"Times New Roman",Times,serif;
+  line-height:1.5em; 
   font-size: 50px;
 }
 body, html {
@@ -17,8 +23,6 @@ body, html {
 
 .flex {
   display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .flex-column {
@@ -27,25 +31,33 @@ body, html {
 }
 
 .center {
+  display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .right {
+  display: flex;
   justify-content: flex-end;
   align-items: center;
 }
 
 .start {
+  display: flex;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .between {
-  justify-content: space-between;
+  display: flex;
+  justify-content: space-between ;
   align-items: center;
 } 
-
+.evenly{
+  display: flex;
+  justify-content: space-evenly ;
+  align-items: center;
+}
 .ellipsis { 
   overflow: hidden;
   text-overflow: ellipsis;
@@ -59,4 +71,15 @@ body, html {
   -webkit-box-orient:vertical; 
   -webkit-line-clamp:2; 
 } 
-  
+
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+.text-center{
+  text-align: center;
+}
+

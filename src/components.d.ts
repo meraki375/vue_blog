@@ -7,6 +7,8 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    Aaa: typeof import('./components/aaa.vue')['default']
+    Editor: typeof import('./components/editor.vue')['default']
     GiContextMenu: typeof import('./components/GiContextMenu.vue')['default']
     GiDot: typeof import('./components/GiDot.vue')['default']
     GiFlexibleBox: typeof import('./components/GiFlexibleBox.vue')['default']
@@ -27,9 +29,12 @@ declare module '@vue/runtime-core' {
     GiTitle: typeof import('./components/GiTitle.vue')['default']
     LoadingIcon1: typeof import('./components/GiLodingIcon/LoadingIcon1.vue')['default']
     LoadingIcon2: typeof import('./components/GiLodingIcon/LoadingIcon2.vue')['default']
+    Player: typeof import('./components/player.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Sakana: typeof import('./components/sakana.vue')['default']
     TimeBreach: typeof import('./components/timeBreach/index.vue')['default']
     Tmpl: typeof import('./components/timeBreach/tmpl.vue')['default']
+    Wallpaper: typeof import('./components/wallpaper.vue')['default']
   }
 }

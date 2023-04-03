@@ -198,7 +198,7 @@ const getTableData = async () => {
   try {
     loading.value = true
     const res = await getSystemUserList(params) 
-    if (res.success) {
+    if (res.code) {
       tableData.value = res.list 
       setTotal(res.count)
     }
@@ -223,7 +223,7 @@ const handleOk = async() => {
       return false
     }
     const res = await addSystemUser(form)  
-    if(res.success){
+    if(res.code){
       getTableData()
       visible.value = false;
       return Message.success(res.message)
@@ -253,7 +253,7 @@ const showModal = (e?:any) => {
 //删除按钮
 const confirm = async(e: MouseEvent) => { 
   let res =  await delSystemUser({id:e.id})
-  if(res.success === 201){
+  if(res.code === 201){
     getTableData()
     Message.success('Click on Yes');
   }

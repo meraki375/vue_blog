@@ -107,7 +107,7 @@ const getTableData = async () => {
   try {
     loading.value = true
     const res = await getBlogList(params) 
-    if (res.success) {
+    if (res.code) {
       tableData.value = res.list 
       setTotal(res.count)
     }

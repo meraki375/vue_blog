@@ -36,6 +36,22 @@ export const useMenuStore = defineStore({
         },
         {
           icon: 'menu-indicator',
+          id: 'FLGL',
+          name: '分类管理',
+          path: '/class',
+          keepAlive: true,
+          hidden: false
+        },
+        {
+          icon: 'menu-indicator',
+          id: 'GGGL',
+          name: '公告管理',
+          path: '/message',
+          keepAlive: true,
+          hidden: false
+        },
+        {
+          icon: 'menu-indicator',
           id: 'ZBGL',
           name: '指标管理',
           path: '/indicator',

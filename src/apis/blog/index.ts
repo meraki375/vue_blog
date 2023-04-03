@@ -14,7 +14,7 @@ export function editBlog(data: ApiBlogEdit) {
 }
 
 /** @desc 博客详情 */
-export function getBlog(data: ApiUserItem) {
+export function getBlog(data: any) {
   return axios.get('blog/info', data)  
 }
 

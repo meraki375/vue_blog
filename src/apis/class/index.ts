@@ -4,19 +4,19 @@ import type { ApiClassItem, ApiClassEdit } from './type'
  
 
 /** @desc 获取分类列表 */
-export function getClassList(data:ApiClassItem) {
+export function getClassList(data:any) {
   return axios.get(`class/list`, data)
 }
 
-// /** @desc 新增/编辑博客 */
-// export function editBlog(data: ApiBlogEdit) {
-//   return axios.post('blog/edit', data)  
-// }
+/** @desc 新增/编辑分类 */
+export function editClass(data: ApiClassEdit) {
+  return axios.post('class/edit', data)  
+}
 
-// /** @desc 博客详情 */
-// export function getBlog(data: ApiUserItem) {
-//   return axios.get('blog/info', data)  
-// }
+/** @desc 删除分类 */
+export function delClass(data: any) {
+  return axios.delete('class/del', data)  
+}
 
 // /** @desc 获取角色数据 */
 // export function getSystemRoleList() {

@@ -22,7 +22,7 @@ export default function usePagination(callback: Callback, options: Options = { d
     callback && callback()
   }
 
-  function setTotal(value: number) {
+  function setTotal(value: any) {
     total.value = value
   }
 

@@ -79,10 +79,10 @@ const registering = async () => {
     }
     setLoading(true)
     await userStore.register(form)
-    router.push('/home')
+    router.push('/login')
     setLoading(false)
     navTabStore.init()
-    Message.success('登录成功')
+    Message.success('注册成功')
   } catch (error) {
     errorMessage.value = (error as Error).message
   } finally {

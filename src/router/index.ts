@@ -18,63 +18,9 @@ function formatModules(_modules: any, result: RouteRecordNormalized[]) {
 export const appRoutes: RouteRecordNormalized[] = formatModules(modules, [])
 
 const routes = [
-  
-  {
-    path: '/login',
-    name: 'Login',
-    component: () => import('@/views/login/index.vue'),
-    meta: { title: '登录', keepAlive: false }
-  },
-  // {
-  //   path: '/meraki',
-  //   name: 'meraki',
-  //   component: () => import('@/views/meraki/demo.vue'),
-  //   meta: { title: '前台', keepAlive: false }
-  // },
-  {
-    path: '/registered',
-    name: 'registered',
-    component: () => import('@/views/login/registered.vue'),
-    meta: { title: '注册', keepAlive: false }
-  },
-  ...appRoutes,
-  {
-    path: '/',
-    name: 'Layout',
-    redirect: '/home',
-    component: () => import('@/layout/index.vue'),
-    meta: { title: '首页', keepAlive: false },
-    children: [
-      {
-        path: '/home',
-        name: 'Home',
-        component: () => import('@/views/home/index.vue'),
-        meta: { title: '首页', keepAlive: false }
-      },
-      {
-        path: '/about',
-        name: 'About',
-        component: () => import('@/views/about/index.vue'),
-        meta: { title: '关于', keepAlive: false }
-      },
-      {
-        path: '/navigation',
-        name: 'Navigation',
-        component: () => import('@/views/navigation/index.vue'),
-        meta: { title: '导航', keepAlive: false }
-      },
-      {
-        path: '/tool',
-        name: 'Tool',
-        component: () => import('@/views/tool/index.vue'),
-        meta: { title: '功能页', keepAlive: true }
-      }
-    ]
-  },
   {
     path: '/meraki',
     name: 'Meraki',
-    redirect: '/meraki',
     component: () => import('@/views/meraki/components/index.vue'),
     meta: { title: '前台', keepAlive: false },
     children: [
@@ -85,12 +31,23 @@ const routes = [
       //   meta: { title: '首页', keepAlive: false }
       // },
       {
-        path: '/meraki/home',
+        path: '/',
         name: '首页',
         icon: '1cangchucangku',
         id: 'SY',
         component: () => import('@/views/meraki/home.vue'),
-        meta: { title: '首页', keepAlive: false }
+        meta: { title: '首页', keepAlive: false },
+      },
+      {
+        path: '/meraki/blog',
+        name: '博客详情页',
+        hidden: true,
+        component: () => import('@/views/meraki/meraki_blog.vue'),
+        meta: { title: '博客详情页', keepAlive: false },
+        // beforeEnter: (to: any, from: any, next: any) => {
+        //   to.meta.title = to.query.title
+        //   next()
+        // }
       },
       {
         path: '/meraki/table',
@@ -139,9 +96,63 @@ const routes = [
         id: 'BZSM',
         component: () => import('@/views/meraki/home.vue'),
         meta: { title: '本站声明', keepAlive: true }
+      },
+      {
+        path: '/login',
+        name: 'Login',
+        icon: '1banquan',
+        component: () => import('@/views/login/index.vue'),
+        meta: { title: '登录', keepAlive: false }
+      },
+    ]
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import('@/views/login/index.vue'),
+    meta: { title: '登录', keepAlive: false }
+  },
+  {
+    path: '/registered',
+    name: 'registered',
+    component: () => import('@/views/login/registered.vue'),
+    meta: { title: '注册', keepAlive: false }
+  },
+  ...appRoutes,
+  {
+    path: '/home',
+    name: 'Layout',
+    redirect: '/home',
+    component: () => import('@/layout/index.vue'),
+    meta: { title: '首页', keepAlive: false },
+    children: [
+      {
+        path: '/home',
+        name: 'Home',
+        component: () => import('@/views/home/index.vue'),
+        meta: { title: '首页', keepAlive: false }
+      },
+      {
+        path: '/about',
+        name: 'About',
+        component: () => import('@/views/about/index.vue'),
+        meta: { title: '关于', keepAlive: false }
+      },
+      {
+        path: '/navigation',
+        name: 'Navigation',
+        component: () => import('@/views/navigation/index.vue'),
+        meta: { title: '导航', keepAlive: false }
+      },
+      {
+        path: '/tool',
+        name: 'Tool',
+        component: () => import('@/views/tool/index.vue'),
+        meta: { title: '功能页', keepAlive: true }
       }
     ]
   },
+ 
 ]
 
 const router = createRouter({
