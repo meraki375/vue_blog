@@ -140,10 +140,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="border">
-                  <h1 style="text-align: center;">公告</h1>
-                  <h5>哔哩哔哩（NASDAQ:BILI；HKEX:9626 [193]  ），英文名称：bilibili，简称B站，是中国年轻世代高度聚集的文化社区和视频网站，该网站于2009年6月26日创建，被网友们亲切地称为“B站” [1-2]  。2018年3月28日，哔哩哔哩在美国纳斯达克上市 [3]  。2021年3月29日，哔哩哔哩正式在香港二次上市 [180]  。B站早期是一个ACG（动画、漫画、游戏）内容创作与分享的视频网站。 [5-6]  经过十年多的发展，围绕用户、创作者和内容，构建了一个源源不断产生优质内容的生态系统，B站已经涵盖7000多个兴趣圈层的多元文化社区，曾获得QuestMobile研究院评选的“Z世代偏爱APP”和“Z世代偏爱泛娱乐APP”两项榜单第一名并入选“BrandZ”报告2019最具价值中国品牌100强 [2]  [7-9]   。2022年2月，哔哩哔哩直播将上线开播前人脸认证功能，确保开播人与实名认证者一致，后续逐步在各个分区开放 [212]  。9月29日，港交所官网显示，哔哩哔哩在香港联交所由第二上市转为主要上市，将于10月3日正式生效 [286]  。</h5>
-                </div>
+                <div class="border" v-html="data.centent"></div>
                 
               </a-col>
             </a-row>
@@ -161,7 +158,7 @@
 
 <script setup lang="ts" name="Home">
 import "../../assets/icon/iconfont.js"
-import { getImageList } from '@/apis'
+import { getImageList, getMessage } from '@/apis'
 import { ref, nextTick, reactive, getCurrentInstance } from 'vue' 
 import { getBlogList } from '@/apis'
 import {useRouter } from 'vue-router'
@@ -190,11 +187,14 @@ const data = reactive({
   },
   images: [] as any,
   blogList: [] as any,
+  centent:''
 })
-const init =  () => {
-  getBlogList(data.params).then((res:any)=>{
+const init = async () => {
+  await getBlogList(data.params).then((res:any)=>{
     data.blogList = res.list
   })
+  let res:any = await getMessage()
+  data.centent = res.data.centent
 }
 const onDetails = (id:number, title:string) =>{
   return router.push({ path: '/meraki/blog', query: { id: id, title:title }})

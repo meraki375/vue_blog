@@ -39,7 +39,7 @@ const iconSize = computed<string | number>(() => {
 const iconName = computed<string>(() => `#icon-${props.name}`)
 
 const svgClass = computed<string>(() => {
-  if (props.name) return `svg-icon icon-${props.name}`
+  if (props.name) return `my-svg-icon `
   return 'svg-icon'
 })
 </script>
@@ -52,4 +52,9 @@ const svgClass = computed<string>(() => {
   vertical-align: middle;
   flex-shrink: 0;
 }
+.my-svg-icon use {
+  fill: red; /* 设置SVG图标的填充色为红色 */
+  stroke: blue; /* 设置SVG图标的描边色为蓝色 */
+}
+
 </style>

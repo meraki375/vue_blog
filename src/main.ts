@@ -25,8 +25,12 @@ import directives from './directives'
 
 // 解决 json-editor-vue3 报错
 import 'jsoneditor'
-
+//字节图标库
+import {install} from '@icon-park/vue-next/es/all';
 const app = createApp(App)
+
+install(app); // use default prefix 'icon', eg: icon is People, name is icon-people.
+install(app, 'i'); // use custom prefix 'i', eg: icon is People, name is i-people.
 
 app.use(router)
 app.use(createPinia())

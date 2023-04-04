@@ -26,10 +26,12 @@ const data = reactive({
         title:'',
         centent:'',
         createAt:'',
+        icon:'book-open'
 
     },
 })
 const init =  () => {
+    
     getBlog({id:id}).then((res:any)=>{
         data.form = res.article
     })

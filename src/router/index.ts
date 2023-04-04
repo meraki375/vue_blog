@@ -62,7 +62,7 @@ const routes = [
         name: '时间线',
         icon: '1shijianchuo',
         id: 'SJX',
-        component: () => import('@/views/meraki/home.vue'),
+        component: () => import('@/views/meraki/timeline.vue'),
         meta: { title: '时间线', keepAlive: true }
       },
       {

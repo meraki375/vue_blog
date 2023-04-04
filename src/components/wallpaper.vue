@@ -7,9 +7,11 @@
         <div><img src="../assets/images/bilibili/5.png"></div>
         <div><img src="../assets/images/bilibili/6.png"></div>
         <template class="centent">
-            <h1>{{ props.form.title }}</h1>
-            <!-- <p v-html="props.form.centent.slice(0,100)"></p> -->
-            <div class="center">
+            <a-space size="large">
+                <IconPark :type="props.form.icon" theme="outline" :size="'42px'" fill="#FFF"/>
+                <h1 style="font-size: 36px; color:#fff;">{{ props.form.title }}</h1>
+            </a-space> 
+            <div class="center" v-if="!props.onlytitle">
                 <icon-clock-circle style="margin: 10px; color: aliceblue;"/>
                 <p>{{props.form.createAt}}</p>
                 <icon-tag style="margin: 10px;color: aliceblue;"/>
@@ -20,6 +22,7 @@
    
 </template>
 <script setup lang="ts" name="Wallpaper">
+import {IconPark} from '@icon-park/vue-next/es/all';
 import {onMounted, nextTick} from 'vue' 
     onMounted(() => {
         nextTick(() => {
@@ -109,7 +112,11 @@ import {onMounted, nextTick} from 'vue'
         })
     })
     const props: any = defineProps({
-        form: Object, // 表单
+        form: Object, // 表单 
+        onlytitle:{ // 是否只有标题
+            type: Boolean,
+            default: () => false
+        }
     })
 </script>
 <style scoped lang="scss"> 
@@ -151,9 +158,9 @@ import {onMounted, nextTick} from 'vue'
         bottom: 10%;
         display: block;
         width: 100%;
-        height: 30%;
-        text-align: center;
-        color:#fff;
+        height: 50%;
+        text-align: center; 
+        color: azure;
     }
 </style>
  

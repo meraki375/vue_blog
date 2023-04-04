@@ -16,8 +16,6 @@
 import { useNavTabStore, useAppStore } from '@/store'
 const navtabStore = useNavTabStore()
 const appStore = useAppStore()
-console.log(navtabStore.cacheList);
-
 </script>
 
 <style lang="scss" scoped>
