@@ -40,8 +40,16 @@
             <a-form-item label="标题" :rules="rules.title">
               <a-input v-model="data.form.title" placeholder="请输入标题" />
             </a-form-item>
+            <a-form-item field="cover_url" label="博客封面">
+                <Mupload
+                    :fileList="data.fileList"
+                    fileKey="cover_url"
+                    :form="data.form"
+                    uploadFolder="image"
+                ></Mupload>
+            </a-form-item>
             <a-form-item label="内容" >
-              <div style="height: 500px;">
+              <div  >
                 <Editor
                 :formKey="'centent'"
                 :form="data.form"
@@ -109,8 +117,10 @@ const data = reactive({
     title: '',
     centent: '', 
     class:[] as any,
-    status:1
-  }
+    status:1,
+    cover_url:''
+  },
+  fileList:[] as any
 })
 const animatedName = ref('to-right')
 
@@ -130,10 +140,7 @@ const next = async(form:any) => {
   if (current.value === 3) {
     let params = {
       id:id,
-      title: form?.title,
-      centent: form?.centent,
-      class: form?.class,
-      status: form?.status,
+      ...data.form,
       senderName:userStore.username,
       uid: userStore.id 
     } 
@@ -170,7 +177,11 @@ const init = async () =>{
   options.value = ret.list
   if(id){
     const res = await getBlog({id:id})
-    data.form = res.article 
+    data.form = res.article
+    if(res.article.cover_url){
+      data.fileList = [{url: res.article.cover_url}]
+    }
+    
   }
 }
 
@@ -228,8 +239,5 @@ init()
     min-width: 500px;
     margin: 30px 120px;
   }
-}
-.editor{
-  // margin-top:30px;
 }
 </style>

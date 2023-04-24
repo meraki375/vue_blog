@@ -6,6 +6,8 @@ export * from './cate'
 export * from './blog'
 export * from './class'
 export * from './meraki'
+export * from './note'
+export * from './cos'
 
 export * from './table/type'
 export * from './system/type'

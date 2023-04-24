@@ -86,7 +86,7 @@ const routes = [
         name: '随手小记',
         icon: '1wendang',
         id: 'SSXJ',
-        component: () => import('@/views/meraki/home.vue'),
+        component: () => import('@/views/meraki/note.vue'),
         meta: { title: '随手小记', keepAlive: true }
       },
       {

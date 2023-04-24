@@ -33,6 +33,8 @@
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 import { onBeforeUnmount, ref, shallowRef, onMounted, watch, reactive, nextTick } from 'vue'
 import '@wangeditor/editor/dist/css/style.css' // 引入 css
+import { uploadFile } from '@/apis'
+
 const emit = defineEmits(['change'])
 const props: any = defineProps({
   id: { //回显ID
@@ -57,6 +59,7 @@ const props: any = defineProps({
   },
   formKey: String, // 表单字段
   form: Object, // 表单
+  
 })
 const data = reactive({
     titleList:[] as any
@@ -65,8 +68,23 @@ const toolbarConfig = {}
 const editorConfig = { placeholder: '请输入内容...' } 
 // 编辑器实例，必须用 shallowRef
 const editorRef = shallowRef()
+
 const handleCreated = (editor: any) => {
-    editorRef.value = editor // 记录 editor 实例，重要！
+    editorRef.value = editor // 记录 editor 实例，重要
+    // 自定义上传方法
+    const customUpload = async(file:any, insertFn:any) => {
+        // file 即选中的文件
+        await uploadFile(file.name, file, "eidtor").then((res:any)=>{
+              if(res.code ===200){
+                const url = "http://" + res.msg.Location;
+                insertFn(url);
+              }
+        })
+        
+      };
+      //将定义的上传方法与绑定给editor的uploadImage配置
+      editor.getMenuConfig("uploadImage").customUpload = customUpload;
+     
 }
 // 组件销毁时，也及时销毁编辑器
 onBeforeUnmount(() => {
@@ -74,13 +92,13 @@ onBeforeUnmount(() => {
   if (editor == null) return
   editor.destroy()
 })
+
 const handleChange = (editor:any) => {
     data.titleList =  editor.getElemsByTypePrefix('header')
 };
+  
 nextTick(() => {
     if(props.disabled){
-        console.log(editorRef);
-        // if (editorRef == null) return;
         editorRef.value.disable()
     }
 })

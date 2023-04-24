@@ -14,6 +14,7 @@
 <script setup lang="ts" name="Message">
 import { reactive, } from 'vue'
 import { editMessage, getMessage, } from '@/apis'
+import { Message } from '@arco-design/web-vue'
 const data = reactive({
     form: {
         centent: '',
@@ -27,6 +28,9 @@ const init = async () =>{
 }
 const edit = async () =>{   
     const res = await editMessage(data.form)
+    if(res.code == 201){
+        Message.success(res.message)
+    }
 }
 init() 
 </script>
