@@ -5,6 +5,7 @@
         :limit="props.limit"
         :custom-request="customRequest"
         :onSuccess="onSuccess"
+        :before-remove="beforeRemove"
         image-preview
         :file-list="props.fileList"
         /> 
@@ -31,7 +32,7 @@ const props: any = defineProps({
     uploadFolder: String, // 上传到oss的文件目录
 })
 
-const emit = defineEmits(['uploadSuccess',])
+const emit = defineEmits(['uploadSuccess','uploadError'])
   
 const data = reactive({
     fileList: [], // 图片地址设置为数组 
@@ -63,13 +64,17 @@ const customRequest = async(option:any) => {
 
 //成功回调
 const onSuccess = (file:any) => {
-    console.log(file);
-    
+    let url = "https://" + file.response.Location
   if (props.fileKey) {
-    props.form[props.fileKey] =  "https://" + file.response.Location
+    props.form[props.fileKey] =  url
   }
-  // props.imageList[0] = file
-//   proxy.$refs['uploadRef'].clearFiles()
-  emit('uploadSuccess', file, props.fileKey)
+  
+  emit('uploadSuccess', file, props.fileKey, url)
+}
+//删除文件前回调
+const beforeRemove = (fileItem:any) => {
+    console.log(fileItem);
+    
+    emit('uploadError', fileItem)
 }
 </script>

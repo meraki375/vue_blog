@@ -15,8 +15,8 @@
             show-arrow="never"
             :move-speed=10000
           > 
-            <a-carousel-item v-for="image in images">
-              <img src="https://api.ixiaowai.cn/api/api.php" style="width: 100%;height: 100%;object-fit: cover;">
+            <a-carousel-item v-for="image in data.images">
+              <img :src="image.image_url + '?imageMogr2/format/webp'" style="width: 100%;height: 100%;object-fit: cover;">
               <!-- <img
                 :src="image"
                 style="
@@ -158,18 +158,12 @@
 
 <script setup lang="ts" name="Home">
 import "../../assets/icon/iconfont.js"
-import { getImageList, getMessage } from '@/apis'
+import { getWallpaperList, getMessage } from '@/apis'
 import { ref, nextTick, reactive, getCurrentInstance } from 'vue' 
 import { getBlogList } from '@/apis'
 import {useRouter } from 'vue-router'
 const router = useRouter()
 
-const { proxy }: any = getCurrentInstance()
-const images = [
-  'https://xwmusicdata.oss-accelerate.aliyuncs.com//zyguitartest/app/pkg/20230308180520.JPG',
-  'https://xwmusicdata.oss-accelerate.aliyuncs.com//zyguitartest/app/pkg/20230308180610.JPG',
-  'https://xwmusicdata.oss-accelerate.aliyuncs.com//zyguitartest/app/pkg/20230308180627.JPG',
-];
 const iconList =[
   {icon:'微信',code:'#icon-weixin',url:''},
   {icon:'QQ',code:'#icon-QQ',url:''},
@@ -190,6 +184,11 @@ const data = reactive({
   centent:''
 })
 const init = async () => {
+  await getWallpaperList({type:1,pageSize:10,current:1}).then((res:any)=>{
+        if(res.code === 200){
+            data.images = res.list
+        }
+    })
   await getBlogList(data.params).then((res:any)=>{
     data.blogList = res.list
   })

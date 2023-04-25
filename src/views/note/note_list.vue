@@ -63,7 +63,6 @@
                 <a-form :model="data.form" ref="formRef">
                     <a-form-item field="cover_url" label="笔记封面">
                         <Mupload
-                            @uploadSuccess="uploadSuccess" 
                             :fileList="data.fileList"
                             fileKey="cover_url"
                             :form="data.form"
@@ -191,12 +190,6 @@ const handleCancel = () => {
     visible.value = false;
 }
 
-const uploadSuccess = (info: any, fileKey: string) => {
-  if (!info) {
-    // data.form[fileKey] = ''
-  }
-//   proxy.$refs['ruleForm'].validateField(fileKey)
-}
 </script>
 
 <style lang="scss" scoped>
