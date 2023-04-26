@@ -169,7 +169,7 @@ router.beforeEach((to, from, next) => {
   }else{
     const token = getToken()
     if (!token) {
-      next('/login')
+      next('/meraki')
     } else {
       next()
     }

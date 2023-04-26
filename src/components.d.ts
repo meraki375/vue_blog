@@ -7,7 +7,6 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    Aaa: typeof import('./components/aaa.vue')['default']
     Editor: typeof import('./components/editor.vue')['default']
     Footer: typeof import('./components/Footer.vue')['default']
     GiContextMenu: typeof import('./components/GiContextMenu.vue')['default']
