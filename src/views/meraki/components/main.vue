@@ -8,12 +8,14 @@
           </keep-alive>
         </transition>
       </template>
+      
     </router-view>
   </a-layout>
 </template>
 
 <script setup lang="ts" name="Main">
 import { useNavTabStore, useAppStore } from '@/store'
+
 const navtabStore = useNavTabStore()
 const appStore = useAppStore()
 </script>

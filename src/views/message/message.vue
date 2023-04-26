@@ -37,9 +37,10 @@ init()
 <style lang="scss" scoped>
 .contain{
     margin: 10px;
-    height: 500px;
+    height: 100%;
     padding: 20px;
     background-color: #fff;
+    overflow-y: auto;
 }
 .center{
     width: 100%;

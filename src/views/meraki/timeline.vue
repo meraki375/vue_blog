@@ -16,7 +16,7 @@
                 
                 </a-timeline>
         </div>
-        
+        <Footer></Footer>
     </div>
 </template>
 
@@ -54,6 +54,7 @@ init()
 .container{
     background-color: #fff;
     overflow-y: auto;
+    padding-bottom: 20px;
 }
 :deep(.arco-timeline-item-label-relative > .arco-timeline-item-label){
     max-width: 300px;

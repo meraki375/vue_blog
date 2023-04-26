@@ -28,7 +28,9 @@
             </a-carousel-item>
           </a-carousel>
           <div class="top">
-            <p>温暖的灵魂终将相遇</p>
+            <p id="hitokoto">
+              <hitokoto />
+            </p>
             <div class="iconList">
               <div v-for="item in iconList">
                 <div class="egg">
@@ -68,7 +70,7 @@
         
         <!-- <div class="centent">  -->
             <div calss="aplayer">
-              <player></player>
+              
             </div>
             <a-row class="grid-centent"   justify="space-around">
               <a-col :span="17" class="blog-list">
@@ -89,7 +91,7 @@
                       <img
                         style="width:100%; border-radius: 15px;"
                         alt="dessert"
-                        :src="item.cover_url"
+                        :src="item.cover_url + '?imageMogr2/format/webp'"
                       />
                     </div>
                   </template>
@@ -123,19 +125,19 @@
                       />
                     </a-avatar>
                     <h1>meraki</h1>
-                    <h3>绝口不提不是因为忘记,而是因为铭记</h3>
+                    <hitokoto />
                     <div class="evenly" style="margin: 10px;">
                        <div>
                          <h2>文章</h2>
-                         <h3>22</h3>
+                         <h3>{{ data.count }}</h3>
                        </div>
                        <div >
                           <h2>文章</h2>
-                         <h3>22</h3>
+                         <h3>{{ data.count }}</h3>
                        </div>
                        <div>
                           <h2>文章</h2>
-                          <h3>22</h3>
+                          <h3>{{ data.count }}</h3>
                        </div>
                     </div>
                   </div>
@@ -146,7 +148,7 @@
             </a-row>
         <!-- </div> -->
       </a-col>
-       
+       <Footer></Footer>
       <!-- <a-col :span="12">
         Col
       </a-col> -->
@@ -181,7 +183,8 @@ const data = reactive({
   },
   images: [] as any,
   blogList: [] as any,
-  centent:''
+  centent:'',
+  count:''
 })
 const init = async () => {
   await getWallpaperList({type:1,pageSize:10,current:1}).then((res:any)=>{
@@ -191,6 +194,7 @@ const init = async () => {
     })
   await getBlogList(data.params).then((res:any)=>{
     data.blogList = res.list
+    data.count = res.count
   })
   let res:any = await getMessage()
   data.centent = res.data.centent

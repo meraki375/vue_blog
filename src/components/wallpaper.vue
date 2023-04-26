@@ -80,7 +80,6 @@ import {onMounted, nextTick} from 'vue'
                         // 用 log 函数来模拟 ease-out 的效果
                         // 好像应该用其他函数才对
                         const step = (end - start) * (Math.log(++frameCount) / Math.log(FRAME_QTY))
-                        console.log(`frameCount = ${frameCount}, step = ${step}`)
                         movementLog.percentage = start + step
                         movementControl(movementLog.percentage)
                     }

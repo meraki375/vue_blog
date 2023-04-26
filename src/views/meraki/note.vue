@@ -15,7 +15,7 @@
                 <a-list-item class="list-demo-item" action-layout="vertical"> 
                     <template #extra>
                     <div className="image-area">
-                        <img alt="arco-design" :src="item.imageSrc" />
+                        <img alt="arco-design" :src="item.cover_url + '?imageMogr2/format/webp'" />
                     </div>
                     </template>
                     <a-list-item-meta
@@ -29,7 +29,7 @@
             </a-list>
             
         </div>
-        
+        <Footer></Footer>
     </div>
 </template>
 <script setup lang="ts" name="Mblog">
@@ -62,6 +62,7 @@ init()
     width: 100%;
     height: 100%;
     overflow-y: auto;
+    padding-bottom: 20px;
 }
 .centent{
     width: 70%;

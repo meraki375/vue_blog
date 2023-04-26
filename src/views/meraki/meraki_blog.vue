@@ -11,6 +11,7 @@
             >
 
             </Editor> 
+            <Footer></Footer>
         </div>
         
     </div>
@@ -41,8 +42,7 @@ init()
 
 <style lang="scss" scoped>
 .centent{
-    width: 70%;
-    height: 100%;
+    width: 70%; 
     margin: 30px auto;
 }
 .container{

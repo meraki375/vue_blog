@@ -9,6 +9,7 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Aaa: typeof import('./components/aaa.vue')['default']
     Editor: typeof import('./components/editor.vue')['default']
+    Footer: typeof import('./components/Footer.vue')['default']
     GiContextMenu: typeof import('./components/GiContextMenu.vue')['default']
     GiDot: typeof import('./components/GiDot.vue')['default']
     GiFlexibleBox: typeof import('./components/GiFlexibleBox.vue')['default']
@@ -27,6 +28,7 @@ declare module '@vue/runtime-core' {
     GiTextSwitch: typeof import('./components/GiTextSwitch.vue')['default']
     GiThemeBtn: typeof import('./components/GiThemeBtn.vue')['default']
     GiTitle: typeof import('./components/GiTitle.vue')['default']
+    Hitokoto: typeof import('./components/hitokoto.vue')['default']
     LoadingIcon1: typeof import('./components/GiLodingIcon/LoadingIcon1.vue')['default']
     LoadingIcon2: typeof import('./components/GiLodingIcon/LoadingIcon2.vue')['default']
     Mupload: typeof import('./components/Mupload.vue')['default']

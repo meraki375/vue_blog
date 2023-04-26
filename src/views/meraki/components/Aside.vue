@@ -39,7 +39,12 @@
       <div class="menuButton" @click="collapse(true)"><icon-menu-unfold :size='32' style="color: #fff;"/></div>
     <!-- </a-layout> -->
   <!-- </div> -->
-  
+  <player
+    :id="'2088799380'"
+    :type="'playlist'"
+    :autoplay="true"
+    :fixed="true"
+  ></player>
    
   
 </template>
@@ -73,7 +78,7 @@ const handleCancel = () => {
   background: #83C1F1;
   opacity: 0.3;
   position:absolute;
-  bottom:50px;
+  bottom:100px;
   left:50px;
   z-index: 9;
   display: flex;

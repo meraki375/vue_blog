@@ -1,8 +1,9 @@
 import axio from 'axios'
 import axios from '@/utils/http' 
-/** @desc 获取二次元壁纸列表 */
-export function getImageList() {
-    return axio.get(`https://api.ixiaowai.cn/api/api.php?return=json`)
+/** @desc 获取动漫每日一言 */
+export function fetchHitokoto() {
+    
+    return axio.get(`https://v1.hitokoto.cn/?c=b`)
 }
 
 /** @desc 获取公共内容 */
