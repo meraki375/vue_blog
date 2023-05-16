@@ -163,12 +163,12 @@
 import { ref, nextTick, reactive, getCurrentInstance } from 'vue' 
 import { usePagination } from '@/hooks'
 import { Message } from '@arco-design/web-vue'
-import { getSystemUserList, addSystemUser, delSystemUser } from '@/apis'
+import { getSystemUserList, editUser, delSystemUser } from '@/apis'
 import type { ApiUserItem, ApiDeptItem } from '@/apis'
 const { proxy }: any = getCurrentInstance()
 const visible = ref<boolean>(false);
 const loading = ref(false)
-const tableData = ref<ApiUserItem[]>([])
+const tableData = ref({})
  
 const data = reactive({
   q: '',
@@ -182,7 +182,8 @@ const form = reactive({
   phone:'',
   sex: 0, 
   status:1,
-  avatar:'https://xwmusicdata.oss-accelerate.aliyuncs.com/zyguitartest/music/cover/20221104171147.png'
+  avatar:'',
+  id:''
 })
 const { current, pageSize, total, changeCurrent, changePageSize, setTotal } = usePagination(() => {
   getTableData()
@@ -222,15 +223,15 @@ const handleOk = async() => {
       Message.warning('请输入账户密码')
       return false
     }
-    const res = await addSystemUser(form)  
-    if(res.code){
+    const res = await editUser(form)  
+    if(res.code === 201){
       getTableData()
       visible.value = false;
       return Message.success(res.message)
     }
      
-  } catch (error) {
-    errorMessage.value = (error as Error).message
+  } catch (error:any) {
+    return Message.error(error)
   } 
   
 };

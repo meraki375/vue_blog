@@ -3,7 +3,7 @@ import COS from 'cos-js-sdk-v5'
 
 
 const uploadToken = () => {
-  return axios.get('/getCOSToken', {})
+  return axios.get('api/getCOSToken', {})
 }
 
 const uploadFile = async (name: any, file: any, uploadFolder: any, progress?:any) => {

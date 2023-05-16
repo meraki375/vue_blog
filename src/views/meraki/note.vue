@@ -6,10 +6,13 @@
              >
         </wallpaper>
         <div class="centent"> 
+            <div>随手记录的一些小工具链接，进行分享</div>
             <a-list
                 class="list-demo-action-layout"
                 :bordered="false"
+                :split="false"
                 :data="data.noteList"
+                :gridProps="{ gutter: 0, span: 12 }" 
             >
                 <template #item="{ item }">
                 <a-list-item class="list-demo-item" action-layout="vertical"> 
@@ -32,9 +35,9 @@
         <Footer></Footer>
     </div>
 </template>
-<script setup lang="ts" name="Mblog">
-import { getNoteList } from '@/apis'
-import { onBeforeUnmount, ref, shallowRef, onMounted, watch, reactive } from 'vue' 
+<script setup lang="ts" name="Note">
+import { getNoteList_c } from '@/apis'
+import { reactive } from 'vue' 
   
 const data = reactive({
     form:{
@@ -50,7 +53,7 @@ const init =  () => {
         q:'',
         date:''
     } 
-    getNoteList(params).then((res:any)=>{
+    getNoteList_c(params).then((res:any)=>{
         data.noteList = res.list
     })
 }
@@ -68,6 +71,7 @@ init()
     width: 70%;
     height: 100%;
     margin: 30px auto;
+    text-align: center;
 }
 .list-demo-action-layout .image-area {
   width: 183px;

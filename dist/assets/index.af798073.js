@@ -1,0 +1,1 @@
+import{L as e}from"./index.3ca3cb15.js";function l(a){return e.get("api/wallpaper/list",a)}function t(a){return e.post("api/wallpaper/edit",a)}function r(a){return e.delete("api/wallpaper/del",a)}export{r as d,t as e,l as g};

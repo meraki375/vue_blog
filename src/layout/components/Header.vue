@@ -1,7 +1,7 @@
 <template>
   <a-layout-header>
     <section class="system-logo" @click="toHome">
-      <img src="@/assets/images/logo (2).webp" />
+      <img src="@/assets/images/logo(2).webp" />
       <span class="gi_hover system-name">哆啦A梦 の 百宝袋</span>
     </section>
     <a-space class="system-head" size="medium">

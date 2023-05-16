@@ -1,0 +1,1 @@
+import{L as s}from"./index.3ca3cb15.js";const t="/mock";function n(e){return s.get("system/user/list",e)}function o(e){return s.post("system/user/add",e)}function i(e){return s.delete("system/user/del",e)}function m(){return s.get(`${t}/system/role/list`)}export{o as a,m as b,i as d,n as g};

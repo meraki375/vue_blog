@@ -1,0 +1,1 @@
+import{V as d,L as g}from"./index.3ca3cb15.js";const u=()=>g.get("api/getCOSToken",{}),S=async(s,t,c,l)=>{const e=await u(),n=new d({SecretId:e.AccessKeyId,SecretKey:e.AccessKeySecret});return new Promise((a,r)=>{n.uploadFile({Bucket:e.Bucket,Region:e.Region,Key:`${c}/${s}`,Body:t,StorageClass:"STANDARD"},(o,i)=>{o?r({code:500,msg:o}):a({code:200,msg:i})})})};export{S as u};

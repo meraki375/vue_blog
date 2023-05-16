@@ -1,0 +1,1 @@
+import{L as t}from"./index.3ca3cb15.js";function e(s){return t.get("api/class/list",s)}function i(s){return t.post("api/class/edit",s)}function l(s){return t.delete("api/class/del",s)}export{l as d,i as e,e as g};

@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import type { RouteRecordNormalized } from 'vue-router'
 import { getToken } from '@/utils/auth'
+import { TrousersBellBottoms } from '@icon-park/vue-next/es/map'
 
 // 路由模块化自动导入
 const modules = import.meta.globEager('./modules/*.ts')
@@ -17,12 +18,11 @@ function formatModules(_modules: any, result: RouteRecordNormalized[]) {
 
 export const appRoutes: RouteRecordNormalized[] = formatModules(modules, [])
 
-const routes = [
+const routes: any = [
   {
     path: '/meraki',
     name: 'Meraki',
     component: () => import('@/views/meraki/components/index.vue'),
-    meta: { title: '前台', keepAlive: false },
     children: [
       // {
       //   path: '/meraki/home',
@@ -36,14 +36,14 @@ const routes = [
         icon: '1cangchucangku',
         id: 'SY',
         component: () => import('@/views/meraki/home.vue'),
-        meta: { title: '首页', keepAlive: false },
+        meta: { title: '首页', keepAlive: true },
       },
       {
         path: '/meraki/blog',
         name: '博客详情页',
         hidden: true,
         component: () => import('@/views/meraki/meraki_blog.vue'),
-        meta: { title: '博客详情页', keepAlive: false },
+        meta: { title: '博客详情页', keepAlive: true },
         // beforeEnter: (to: any, from: any, next: any) => {
         //   to.meta.title = to.query.title
         //   next()
@@ -63,7 +63,7 @@ const routes = [
         icon: '1shijianchuo',
         id: 'SJX',
         component: () => import('@/views/meraki/timeline.vue'),
-        meta: { title: '时间线', keepAlive: true }
+        meta: { title: '时间线', keepAlive: false }
       },
       {
         path: '/meraki/plan',
@@ -71,7 +71,7 @@ const routes = [
         icon: '1linghuokuozhan',
         id: 'KFJH',
         component: () => import('@/views/meraki/home.vue'),
-        meta: { title: '开发计划', keepAlive: true }
+        meta: { title: '开发计划', keepAlive: false }
       },
       {
         path: '/meraki/wall',
@@ -79,7 +79,7 @@ const routes = [
         icon: '1gongyi',
         id: 'BBQ',
         component: () => import('@/views/meraki/home.vue'),
-        meta: { title: '表白墙', keepAlive: true }
+        meta: { title: '表白墙', keepAlive: false }
       },
       {
         path: '/meraki/note',
@@ -94,7 +94,7 @@ const routes = [
         name: '本站声明',
         icon: '1banquan',
         id: 'BZSM',
-        component: () => import('@/views/meraki/home.vue'),
+        component: () => import('@/views/meraki/privacy.vue'),
         meta: { title: '本站声明', keepAlive: true }
       },
       {
@@ -148,7 +148,7 @@ const routes = [
         path: '/tool',
         name: 'Tool',
         component: () => import('@/views/tool/index.vue'),
-        meta: { title: '功能页', keepAlive: true }
+        meta: { title: '功能页', keepAlive: false }
       }
     ]
   },
@@ -161,15 +161,19 @@ const router = createRouter({
   scrollBehavior: () => ({ left: 0, top: 0 })
 })
  
-router.beforeEach((to, from, next) => { 
-  if (to.path === '/login' || to.path === '/registered') {
-    next()
+router.beforeEach((to, from, next) => {
+  let whiteList = routes[0].children.filter((item:any)=>{
+    return to.path === item.path
+  })
+                                                         
+  if (to.path === '/login' || to.path === '/registered' || whiteList.length) {
+    next()  
   }else if(to.matched.length === 0){
     next('/error/404')
   }else{
     const token = getToken()
     if (!token) {
-      next('/meraki')
+      next('/')
     } else {
       next()
     }

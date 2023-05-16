@@ -1,0 +1,1 @@
+import{L as e}from"./index.3ca3cb15.js";function i(t){return e.get("api/note/list",t)}function n(t){return e.post("api/note/edit",t)}function r(t){return e.delete("api/note/del",t)}export{r as d,n as e,i as g};

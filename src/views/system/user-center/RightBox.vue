@@ -1,19 +1,19 @@
 <template>
   <div class="right-box">
     <section class="head-box">
-      <a-avatar :size="60" :trigger-icon-style="{ color: '#3491FA' }">
+      <a-avatar :size="80" :trigger-icon-style="{ color: '#3491FA' }">
         <img :src="userStore.userInfo.avatar" />
-        <template #trigger-icon>
+        <!-- <template #trigger-icon>
           <IconCamera />
-        </template>
+        </template> -->
       </a-avatar>
-      <section class="user-name">{{ userStore.userName }}</section>
+      <section class="user-name">{{ data.form.username }}</section>
       <section class="label-list">
-        <div><icon-user /><span>前端开发工程师</span></div>
-        <div><icon-safe /><span>前端</span></div>
-        <div><icon-location /><span>广州</span></div>
+        <div><icon-user /><span>{{ data.form.position }}</span></div>
+        <div><icon-safe /><span>{{ data.form.company }}</span></div>
+        <div><icon-location /><span>{{ data.form.address }}</span></div>
       </section>
-      <a-button type="primary" class="edit-btn"
+      <a-button type="primary" class="edit-btn" @click="edit()"
         ><template #icon> <icon-edit /> </template>编辑信息</a-button
       >
     </section>
@@ -63,12 +63,86 @@
       </a-comment>
     </section>
   </div>
+  <a-drawer :width="340" :visible="visible" @ok="handleOk" @cancel="handleCancel" unmountOnClose>
+    <template #title>
+      编辑个人信息
+    </template>
+    <a-form :form="data.form" size="medium" :model="data.form" auto-label-width>
+      <a-form-item label="昵称" :rules="rules.username">
+        <a-input v-model="data.form.username" placeholder="请输入昵称" />
+      </a-form-item>
+      <a-form-item label="个人简介" :rules="rules.introductory">
+        <a-textarea  v-model="data.form.introductory" placeholder="请输入个人简介" :max-length="100" allow-clear show-word-limit auto-size/>
+      </a-form-item>
+      <a-form-item label="头像" :rules="rules.avatar">
+          <Mupload
+              :fileList="data.fileList"
+              fileKey="avatar"
+              :form="data.form"
+              uploadFolder="image"
+          ></Mupload>
+      </a-form-item>
+      <a-form-item label="所在地" :rules="rules.address">
+        <a-input v-model="data.form.address" placeholder="请输入所在地" />
+      </a-form-item>
+      <a-form-item label="公司名称" :rules="rules.company">
+        <a-input v-model="data.form.company" placeholder="请输入公司名称" />
+      </a-form-item>
+      
+      <a-form-item label="部门" :rules="rules.department">
+        <a-input v-model="data.form.department" placeholder="请输入部门" />
+      </a-form-item>
+      <a-form-item label="职位" :rules="rules.position">
+        <a-input v-model="data.form.position" placeholder="请输入职位" />
+      </a-form-item>
+      <a-form-item label="Email" :rules="rules.email">
+        <a-input v-model="data.form.email" placeholder="请输入Email" />
+      </a-form-item>
+      <a-form-item label="性别" :rules="rules.sex">
+        <a-radio-group v-model="data.form.sex">
+            <a-radio :value="1">男</a-radio>
+            <a-radio :value="0">女</a-radio>
+          </a-radio-group>
+      </a-form-item>
+      <a-form-item label="手机号" :rules="rules.phone">
+        <a-input-number v-model="data.form.phone" placeholder="请输入手机号" />
+      </a-form-item>
+      <a-form-item label="爱好" :rules="rules.hobby">
+        <a-input-tag v-model="data.form.hobby" placeholder="请选择个人爱好" allow-clear/>
+      </a-form-item>
+    </a-form>
+  </a-drawer>
 </template>
 
 <script setup lang="ts" name="UserCenter">
 import { useUserStore } from '@/store'
-const userStore = useUserStore()
+import { reactive, ref } from 'vue'
+import { editUser } from '@/apis'
+import { Message } from '@arco-design/web-vue'
+const userStore:any = useUserStore()
+console.log(userStore);
 
+const props: any = defineProps({
+    form: Object, // 表单 
+})
+const emit = defineEmits(['onSucceed'])
+const data = reactive({
+  form:userStore.userInfo,
+  fileList:[] as any,
+})
+const rules = {
+  username: [{ required: true, message: '请输入昵称' }],
+  introductory: [{ required: true, message: '请输入个人简介' }],
+  avatar: [{ required: true, message: '请输入头像' }],
+  hobby: [{ required: true, message: '请输入爱好' }],
+  company: [{ required: true, message: '请输入公司名称' }],
+  position: [{ required: true, message: '请输入职位' }],
+  department: [{ required: true, message: '请输入部门' }],
+  phone: [{ required: true, message: '请输入手机号' }],
+  email: [{ required: true, message: '请输入email' }],
+  sex: [{ required: true, message: '请选择性别' }],
+  address:[{ required: true, message: '请选择地址' }],
+}
 const list = [
   {
     avatar:
@@ -101,6 +175,40 @@ const list = [
     text: '打工这辈子是不可能打工的，做生意又不会做，就是偷这种东西，才可以维持生活这样子'
   }
 ]
+const visible = ref(false);
+
+const edit = () => {
+  if(!Array.isArray(data.form.hobby)){
+    data.form.hobby = data.form.hobby.split(',')
+  }
+  data.form.phone = Number(data.form.phone)
+  data.fileList = [{
+    url: data.form.avatar
+  }]
+  visible.value = true;
+};
+const handleOk = async() => {
+  let params = { ...data.form}
+  params.hobby = params.hobby.join(',');
+  let res = await editUser(params)  
+    if(res.code === 201){
+      visible.value = false;
+      emit('onSucceed')
+      userStore.editInfo(data.form)
+      return Message.success(res.message)
+    }else{
+      emit('onSucceed')
+      return Message.error(res.message)
+    }
+};
+const handleCancel = () => {
+  data.form = JSON.parse(localStorage.getItem('UserInfo') as string)
+  visible.value = false;
+}
+if(props.form){
+  data.form = props.form
+}
+
 </script>
 
 <style lang="scss" scoped>

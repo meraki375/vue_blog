@@ -1,5 +1,5 @@
 <template>
-    <div class="container flex">
+    <div class="container flex" >
         <!--编辑器主题-->
         <div :class="props.border ? 'editor' : 'border'">
             <Toolbar style="border-bottom: 1px solid #ccc" :editor="editorRef" :defaultConfig="toolbarConfig" v-if="!props.readonly"/>
@@ -12,29 +12,30 @@
             />
         </div>
         <!-- 标题目录 -->
-        <div :class="props.border ? 'title' : 'notitle'" v-if="props.catalogue">
+        <a-affix :offset-top="0" :target="props.container " >
+          <div class="title" v-if="props.catalogue">
             <span style="font-size: 22px;">标题目录</span>
-            <a-anchor :change-hash="false">
+            <a-anchor :change-hash="false" :scroll-container="props.container" v-if="props.container">
                 <a-anchor-link 
                     v-for="item in data.titleList" 
                     :key="item.id" 
-                    :href="`#`+item.id" 
+                    :href="`#${item.id}`" 
                     :title="item.children[0].text" 
                     :class="item.type">
-
                 </a-anchor-link>
             </a-anchor>
-        </div>
+          </div>
+          
+        </a-affix>
     </div>
     
 </template>
 
 <script setup lang="ts" name="Editor">
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
-import { onBeforeUnmount, ref, shallowRef, onMounted, watch, reactive, nextTick } from 'vue'
+import { onBeforeUnmount, ref, shallowRef, watch, reactive, nextTick, onMounted } from 'vue'
 import '@wangeditor/editor/dist/css/style.css' // 引入 css
 import { uploadFile } from '@/apis'
-
 const emit = defineEmits(['change'])
 const props: any = defineProps({
   id: { //回显ID
@@ -57,12 +58,14 @@ const props: any = defineProps({
     type: Boolean,
     default: () => false
   },
+  container:Object, //滚动的容器
   formKey: String, // 表单字段
   form: Object, // 表单
   
 })
+
 const data = reactive({
-    titleList:[] as any
+    titleList:[] as any,
 })
 const toolbarConfig = {}
 const editorConfig = { placeholder: '请输入内容...' } 
@@ -76,7 +79,7 @@ const handleCreated = (editor: any) => {
         // file 即选中的文件
         await uploadFile(file.name, file, "eidtor").then((res:any)=>{
               if(res.code ===200){
-                const url = "http://" + res.msg.Location;
+                const url = "https://" + res.msg.Location;
                 insertFn(url);
               }
         })
@@ -96,15 +99,19 @@ onBeforeUnmount(() => {
 const handleChange = (editor:any) => {
     data.titleList =  editor.getElemsByTypePrefix('header')
 };
-  
+
 nextTick(() => {
-    if(props.disabled){
-        editorRef.value.disable()
-    }
+  if(props.disabled){
+      editorRef.value.disable()
+  }
 })
+
 </script>
 
 <style lang="scss" scoped>
+.contaienr {
+  position: relative
+}
 .editor {
   width: 100%;
   height: 100%;
@@ -122,12 +129,6 @@ nextTick(() => {
 }
 
 .title{
-    width: 200px; 
-    background-color: #fff;
-    border:1px solid #ccc;
-    padding: 10px;
-}
-.notitle{
     width: 200px; 
     background-color: #fff;
     padding: 10px;

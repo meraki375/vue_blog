@@ -39,7 +39,7 @@
         </a-form>
       </div>
     </section>
-
+    <Footer></Footer>
     <GiThemeBtn class="theme-btn"></GiThemeBtn>
 
     <LoginBg></LoginBg>
@@ -53,17 +53,13 @@ import { useUserStore, useNavTabStore } from '@/store'
 import { useLoading } from '@/hooks'
 import { Message } from '@arco-design/web-vue'
 import LoginBg from './components/LoginBg/index.vue'
-import type { UserLoginParams } from '@/apis'
 const router = useRouter()
 const userStore = useUserStore()
 const navTabStore = useNavTabStore()
 
-const form: UserLoginParams = reactive({
+const form:any = reactive({
   username: '',
   password: '',
-  avatar: '',
-  phone: '',
-  email: '',
 })
 
 // 记住密码

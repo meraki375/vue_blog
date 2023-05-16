@@ -40,7 +40,7 @@ import data from './data'
 const searchValue = ref('')
 
 const search = () => {
-  window.open(`http://www.baidu.com/s?wd=${searchValue.value}`)
+  window.open(`https://www.baidu.com/s?wd=${searchValue.value}`)
 }
 
 const onClick = (i: any) => {

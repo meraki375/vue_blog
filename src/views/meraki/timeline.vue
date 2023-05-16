@@ -20,10 +20,10 @@
     </div>
 </template>
 
-<script setup lang="ts" name="Mblog">
+<script setup lang="ts" name="Timeline">
 import dayjs from 'dayjs'
-import { getBlogList, getClassList } from '@/apis'
-import { onBeforeUnmount, ref, shallowRef, onMounted, watch, reactive } from 'vue'
+import { getBlogList_c} from '@/apis'
+import { reactive } from 'vue'
 const data = reactive({
     form:{
         title:'时间线',
@@ -38,7 +38,7 @@ const init =  () => {
         q:'',
         date:''
     } 
-    getBlogList(params).then((res:any)=>{
+    getBlogList_c(params).then((res:any)=>{
         data.timeList = res.list
     })
 }

@@ -23,7 +23,6 @@ const data = reactive({
 
 const init = async () =>{
   const res:any = await getMessage()
-
   data.form.centent = res.data.centent
 }
 const edit = async () =>{   

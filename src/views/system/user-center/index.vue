@@ -2,27 +2,29 @@
   <div class="user-center">
     <section class="user-card">
       <div class="head">
-        <a-avatar :size="60" :trigger-icon-style="{ color: '#3491FA' }">
-          <img :src="userStore.userInfo.avatar" />
-          <template #trigger-icon>
-            <IconCamera />
-          </template>
+        <a-avatar :size="80" :trigger-icon-style="{ color: '#3491FA' }">
+          <img :src="data.form.avatar" />
+          
         </a-avatar>
-        <div class="name">{{ userStore.userName }}</div>
+        <div class="name">{{ data.form.username }}</div>
         <p class="desc">尘缘已定，不念过往</p>
       </div>
 
       <ul class="list">
         <li class="list-item">
-          <span class="icon"><icon-bookmark :stroke-width="1" :size="16" /></span>
-          <span>前端工程师</span>
+          <span class="icon"><icon-trophy  :stroke-width="1" :size="16" /></span>
+          <span>{{ dayjs().diff(dayjs('1999-11-07T03:03:09.625'), 'year') +'岁' }}</span>
         </li>
         <li class="list-item">
-          <span class="icon"><icon-branch :stroke-width="1" :size="16" /></span
-          ><span>中台-数据平台团队-前端创新团队-前端架构和平台工具团队</span>
+          <span class="icon"><icon-send :stroke-width="1" :size="16" /></span
+          ><span>桂林电子科技大学信息科技学院</span>
         </li>
         <li class="list-item">
-          <span class="icon"><icon-location :stroke-width="1" :size="16" /></span><span>广州市</span>
+          <span class="icon"><icon-share-alt :stroke-width="1" :size="16" /></span
+          ><span>计算机科学与技术专业</span>
+        </li>
+        <li class="list-item">
+          <span class="icon"><icon-location :stroke-width="1" :size="16" /></span><span>广西玉林市</span>
         </li>
       </ul>
 
@@ -45,26 +47,47 @@
       </a-space>
 
       <a-descriptions :column="1" style="margin-top: 20px">
-        <a-descriptions-item label="星座">双鱼座</a-descriptions-item>
-        <a-descriptions-item label="生日">07月16日</a-descriptions-item>
+        <a-descriptions-item label="星座">天蝎座</a-descriptions-item>
+        <a-descriptions-item label="生日">11月07日</a-descriptions-item>
         <a-descriptions-item label="爱好">
           <a-space :size="5">
-            <a-tag color="purple">王者荣耀</a-tag>
-            <a-tag color="magenta">旅行</a-tag>
+            <a-tag v-for="(item, index) of data.form.hobby" :key="index" :color="colors[index]">{{item}}</a-tag>
           </a-space>
         </a-descriptions-item>
       </a-descriptions>
     </section>
 
-    <RightBox></RightBox>
+    <RightBox @onSucceed="init()"></RightBox>
   </div>
 </template>
 
 <script setup lang="ts" name="UserCenter">
 import RightBox from './RightBox.vue'
 import { useUserStore } from '@/store'
+import dayjs from 'dayjs'
+import { reactive } from 'vue'
 
-const userStore = useUserStore()
+const colors = [
+  'red',
+  'orangered',
+  'orange',
+  'gold',
+  'lime',
+  'green',
+  'cyan',
+  'blue',
+  'arcoblue',
+  'purple',
+  'pinkpurple',
+  'magenta',
+  'gray'
+];
+const data = reactive({
+  form:JSON.parse(localStorage.getItem('UserInfo') as string),
+})
+const init = () => {
+  data.form = JSON.parse(localStorage.getItem('UserInfo') as string)
+}
 </script>
 
 <style lang="scss" scoped>

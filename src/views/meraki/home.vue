@@ -17,14 +17,6 @@
           > 
             <a-carousel-item v-for="image in data.images">
               <img :src="image.image_url + '?imageMogr2/format/webp'" style="width: 100%;height: 100%;object-fit: cover;">
-              <!-- <img
-                :src="image"
-                style="
-                  width: 100%;
-                  height: 100%;
-                  object-fit: cover;
-                "
-              /> -->
             </a-carousel-item>
           </a-carousel>
           <div class="top">
@@ -34,11 +26,23 @@
             <div class="iconList">
               <div v-for="item in iconList">
                 <div class="egg">
-                  <a  :href="item.url">
+                  <a  :href="item.url" target="_blank" v-if="item.url">
                     <svg class="icon" aria-hidden="true" >
                       <use :xlink:href="item.code"></use>
                     </svg>
                   </a>
+                  <div v-else class="egg_image">
+                    <svg class="icon" aria-hidden="true" >
+                      <use :xlink:href="item.code"></use>
+                    </svg>
+                    <div class="egg_hover">
+                      <a-image
+                        width="100"
+                        :src="item.image_url"
+                      />
+                    </div>
+                  </div>
+                 
                 </div>
               </div>
             </div>
@@ -60,98 +64,100 @@
           <sakana></sakana>
         </div>
       </a-col>
-       
-      <!-- <a-col :span="12">
-        Col
-      </a-col> -->
     </a-row>
     <a-row class="grid-centent" :align="'stretch'" justify="center">
-      <a-col :span="20">
-        
-        <!-- <div class="centent">  -->
-            <div calss="aplayer">
-              
-            </div>
-            <a-row class="grid-centent"   justify="space-around">
-              <a-col :span="17" class="blog-list">
-                <a-card class="card" v-for="item in data.blogList" >
-                  <template #actions>
-                    <a-space :size="40">
-                      
-                        <icon-heart />
-
-                        <icon-eye />
-                        
-                        <icon-star />
-                      
-                    </a-space>
-                  </template>
-                  <template #cover @click="onDetails(item.id, item.title)">
-                    <div style="height: 204px; border-radius: 15px;">
-                      <img
-                        style="width:100%; border-radius: 15px;"
-                        alt="dessert"
-                        :src="item.cover_url + '?imageMogr2/format/webp'"
-                      />
-                    </div>
-                  </template>
-                  <a-card-meta :title="item.title" @click="onDetails(item.id, item.title)">
-                    <template #description >
-                      <div v-html="item.centent.slice(0,100).concat('...')"></div>
-                    </template>
-                    <template #avatar>
-                      <div :style="{    color: '#1D2129' }">
-                        <div class="start">
-                          <icon-clock-circle style="margin-right: 5px;"/>
-                          <h5>{{item.createAt}}</h5>
-                        </div>
-                        <div class="start">
-                          <icon-tag style="margin-right: 5px;"/>
-                          <h5>{{'分类'}}</h5>
-                        </div>
-                      </div>
-                    </template>
-                  </a-card-meta>
-                </a-card>
+      <a-col :span="15" >
+        <div class="aplayer">
+          <div style="padding: 0 20px;">
+            <IconPark type="announcement" theme="outline" :size="'22px'" fill="#fff"/>
+          </div>
+          <div style="padding-right: 20px;">{{ data.msgIndex+ "/" + data.count }}</div>
+          <div class="wh100" >
+            <a-carousel
+              style="width: 100%; height: 100px;"
+              show-arrow="never"
+              direction="vertical"
+              :auto-play="true"
+              indicator-type="never"
+              @change="handleChange"
+            >
+              <a-carousel-item v-for="item in data.blogList">
                 
-              </a-col>
-              <a-col :span="6" style="width: 100%; height: 100%;">
-                <div class="center border">
-                  <div class="text-center">
-                    <a-avatar :size="96">
-                      <img
-                        alt="avatar"
-                        src="https://p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/3ee5f13fb09879ecb5185e440cef6eb9.png~tplv-uwbnlip3yd-webp.webp"
-                      />
-                    </a-avatar>
-                    <h1>meraki</h1>
-                    <hitokoto />
-                    <div class="evenly" style="margin: 10px;">
-                       <div>
-                         <h2>文章</h2>
-                         <h3>{{ data.count }}</h3>
-                       </div>
-                       <div >
-                          <h2>文章</h2>
-                         <h3>{{ data.count }}</h3>
-                       </div>
-                       <div>
-                          <h2>文章</h2>
-                          <h3>{{ data.count }}</h3>
-                       </div>
-                    </div>
+                <div class="flex wh100 bg" style="flex-direction: column; align-items: flex-start;">
+                  
+                  <div>
+                    {{ `#${item.title}`  }}
                   </div>
+                  <span>
+                    {{ item.introduce }}
+                  </span>
+                  
                 </div>
-                <div class="border" v-html="data.centent"></div>
+              </a-carousel-item>
+            </a-carousel>
+          </div>
+          <div style="padding: 0 20px;">
+            <IconPark type="like" theme="two-tone" size="27" :fill="['#fff' ,'#2F88FF']"  :strokeWidth="2" strokeLinejoin="miter"/>
+          </div>
+          
+        </div>
+      </a-col>
+      
+      <a-col :span="15" class="blog-list"> 
+        <a-card class="card" v-for="item in data.blogList" hoverable @click="onDetails(item.id, item.title)">
+          <template #actions>
+            <a-space :size="40">
+              
+                <icon-heart />
+
+                <icon-eye />
                 
-              </a-col>
-            </a-row>
-        <!-- </div> -->
+                <icon-star />
+              
+            </a-space>
+          </template>
+          <template #cover >
+            <div style="overflow:hidden;  border-radius: 15px 15px 0 0; ">
+              <img
+                class="card_img"
+                alt="dessert"
+                :src="item.cover_url + '?imageMogr2/format/webp'"
+              />
+            </div>
+          </template>
+          <a-card-meta  @click="onDetails(item.id, item.title)">
+            <template #title >
+              <div
+                :style="{ display: 'flex', alignItems: 'center', color: '#1D2129' }"
+              >
+                <svg class="icon" style="font-size:12px" aria-hidden="true" >
+                  <use :xlink:href="getIconByClassId(item.classId).code"></use>
+                </svg>
+                <p :style="{ color: getIconByClassId(item.classId).color,fontFamily: 'Helvetica',fontSize:'12px',marginLeft:'5px'}">{{ item.classObj.name }}</p>
+              </div>
+              <p style="font-size:20px">{{ item.title }}</p>
+              
+            </template>
+            <template #description >
+              {{item.introduce}}
+            </template>
+            <template #avatar>
+              
+              <div style="font-size: 12px;">
+                <div class="start">
+                  <icon-clock-circle style="margin-right: 5px;"/>
+                  <a-typography-text type="secondary">{{dayjs().diff(item.updatedAt,'day')  + "天前"}}</a-typography-text>
+                </div>
+                <div class="start">
+                  <icon-tag style="margin-right: 5px;"/>
+                  <a-typography-text type="secondary">{{item.classObj.name}}</a-typography-text>
+                </div>
+              </div>
+            </template>
+          </a-card-meta>
+        </a-card>
       </a-col>
        <Footer></Footer>
-      <!-- <a-col :span="12">
-        Col
-      </a-col> -->
     </a-row>
   
   </div>
@@ -160,19 +166,30 @@
 
 <script setup lang="ts" name="Home">
 import "../../assets/icon/iconfont.js"
-import { getWallpaperList, getMessage } from '@/apis'
-import { ref, nextTick, reactive, getCurrentInstance } from 'vue' 
-import { getBlogList } from '@/apis'
+import {IconPark} from '@icon-park/vue-next/es/all';
+import { getWallpaperList_c, getMessage_c, getBlogList_c, getClassList_c} from '@/apis'
+import { reactive, onActivated } from 'vue' 
 import {useRouter } from 'vue-router'
+import dayjs from 'dayjs'
 const router = useRouter()
 
 const iconList =[
-  {icon:'微信',code:'#icon-weixin',url:''},
-  {icon:'QQ',code:'#icon-QQ',url:''},
-  {icon:'知乎',code:'#icon-zhihu',url:''},
-  {icon:'GitHub',code:'#icon-github',url:''},
-  {icon:'bilibil',code:'#icon-bilibili',url:''},
-  {icon:'邮件',code:'#icon-youjian',url:''},
+  {icon:'微信',code:'#icon-weixin',image_url:'https://i.hd-r.cn/77c6b389abedf254e6f3416484bd1047.jpg'},
+  {icon:'QQ',code:'#icon-QQ',image_url:'https://i.hd-r.cn/ff83d583cb5c4f2c26f9b6f2db579372.jpg'},
+  {icon:'知乎',code:'#icon-zhihu',url:'https://www.zhihu.com/people/xiao-bo-bo-66-23'},
+  {icon:'GitHub',code:'#icon-github',url:'https://github.com/meraki375'},
+  {icon:'bilibil',code:'#icon-bilibili',url:'https://space.bilibili.com/16445532'},
+  {icon:'邮件',code:'#icon-youjian',url:'mailto:2468343656@qq.com'},
+]
+const iconList1 =[
+  {value: 6, code:'#icon-biji',color:'#2099d8'},
+  {value: 7,code:'#icon-Vue',color:'#2c4052'},
+  {value: 9,code:'#icon-JS',color:'#00aa93'},
+  {value: 10,code:'#icon-tucao',color:'#da1b1a'},
+  {value: 11,code:'#icon-tuoputu_fuwuqi',color:'#a9d0f8'},
+  {value: 12,code:'#icon-41shuoshuo',color:'#2d2d2d'},
+  {value: 13,code:'#icon-html',color:'#fe5732'},
+
 ]
 const data = reactive({
   params:{
@@ -184,31 +201,57 @@ const data = reactive({
   images: [] as any,
   blogList: [] as any,
   centent:'',
-  count:''
+  classList:[],
+  classCount:'',
+  count:'',
+  msgIndex:1
 })
 const init = async () => {
-  await getWallpaperList({type:1,pageSize:10,current:1}).then((res:any)=>{
-        if(res.code === 200){
-            data.images = res.list
-        }
-    })
-  await getBlogList(data.params).then((res:any)=>{
+  await getBlogList_c(data.params).then((res:any)=>{
     data.blogList = res.list
     data.count = res.count
   })
-  let res:any = await getMessage()
+  await getClassList_c(data.params).then((res:any)=>{
+    data.classList = res.list
+    data.classCount = res.count
+  })
+  let res:any = await getMessage_c()
   data.centent = res.data.centent
 }
 const onDetails = (id:number, title:string) =>{
   return router.push({ path: '/meraki/blog', query: { id: id, title:title }})
 }
-init()
+const handleChange =(value:number)=>{
+  data.msgIndex = value
+  console.log(value)
+}
+const getIconByClassId = (classId:number)=> {
+  return iconList1.find((icon:any) => icon.value === classId) || iconList1[0]
+}
+const getWallpaper = async()=>{
+  await getWallpaperList_c({type:1,pageSize:10,current:1}).then((res:any)=>{
+        if(res.code === 200){
+            data.images = res.list
+        }
+    })
+}
+getWallpaper()
+onActivated(() => {
+  init();
+})
 </script>
 
 <style lang="scss" scoped>
 @font-face {
   font-family: 'qfont';
   src: url('../../assets/font/Qfont.ttf');
+}
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
 }
 .grid-demo .arco-col {
   width:100%;
@@ -236,10 +279,11 @@ init()
   height: 100%;
 }
 .top{
-  width: 63%;
+  width: auto;
   height: 65px;
   border-radius: 15px;
   background: rgba(0, 0, 0, .5);
+  padding: 0 20px;
   color: #EAEADF;
   text-align: center;
   line-height: 65px;
@@ -251,11 +295,52 @@ init()
   transform: translate(-50%,-50%);
   z-index: 9;
 }
+#hitokoto{
+  display: inline-block;
+  white-space: nowrap;
+}
 .iconList{
   display: flex;
   justify-content: center
 }
 .egg{
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  background: rgba(0, 0, 0, .5);
+  margin:10px 10px 0 0;
+  line-height: 40px;
+}
+.egg .egg_hover{
+  // display: none;
+  width: 100px;
+  height: 100px;
+  padding: 10px;
+  background: rgba(0, 0, 0, .5);
+  position: relative;
+  top: 20px;
+  left: -35px;
+  border-radius: 6px;
+  transform: translateY(-70%) scale(0);
+  transition: transform 0.5s ease;
+} 
+.egg .egg_hover::before{
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid rgba(0, 0, 0, .5);;
+} 
+.egg .egg_image *:hover ~ .egg_hover{
+    transform: translateY(0) scale(1);
+    transition: transform 0.5s ease;
+}
+.egg_image{
   border-radius: 50%;
   width: 48px;
   height: 48px;
@@ -333,29 +418,91 @@ init()
     font-size:24px;
   }
 }
-.border{
-  border-radius: 15px;
-  border: 1px solid #ccc;
-  padding: 10px;
-  margin-bottom: 10px;
-}
 .grid-centent{ 
-  // display: flex;
   width: 100%;
   height: auto;
   margin: 20px 0;
-  // overflow:hidden;
 }
 .card{
-  // width: 50%; 
   border-radius: 15px;
-  margin: 0 20px 20px 0;
+  margin: 0 0 20px 0;
   border: 1px solid #ccc;
   break-inside: avoid;//避免在主体框中插入任何中断（页面，列或区域）。
+  box-shadow: 0 0 10px rgba(172, 177, 171, 0.5);
+  transition: border-left-color 0.5s ease-in-out;
+}
+
+.card:hover {
+  border-left: 1px solid #6bf8ff;
+}
+.card::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 15px;
+  left: -2px;
+  width: 0;
+  height: 0;
+  background: #6bf8ff;
+  // border-left: 4px solid #6bf8ff;
+  opacity: 0.8;
+  animation: glowfrom 0.8s ease-in-out alternate forwards;
+  box-shadow: 0 0 10px #6bf8ff ;
+}
+
+
+.card:hover::before {
+  // z-index: 77;
+  animation: glowto 0.8s ease-in-out alternate forwards;
+}
+ 
+@keyframes glowto {
+  0% {
+    width: 2px;
+    height:0;
+  }
+  100% {
+    width: 2px;
+    height: calc(100% - 30px);
+  }
+}
+@keyframes glowfrom {
+  0% {
+    width: 2px;
+    height: calc(100% - 30px);
+  }
+  100% {
+    width: 2px;
+    height: 0;
+  }
+}
+.card:hover .card_img {
+  transform: scale(1.4) ;
+  transition: transform 1s ease;
+  border-radius: 15px 15px 0 0; 
+}
+.card_img {
+  width:100%;
+  height:auto;
+  transition: transform 1s ease;
+  border-radius: 15px 15px 0 0; /* 顺序为左上、右上、右下、左下 */
 }
 .blog-list{
-  margin: 20xp 0;
+  margin: 20px 0;
   column-count: 2; //多列的列数
-  column-gap: 0;//列间距
+  column-gap: 20px; /* 设置列之间的间距 */
+}
+.blog-item {
+  break-inside: avoid; /* 防止元素被拆分到不同列 */
+  margin-bottom: 20px; /* 设置元素之间的间距 */
+}
+.aplayer{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 15px;
+  background: #83C1F1;
+  color: white;
 }
 </style>

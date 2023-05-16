@@ -46,7 +46,7 @@ export default defineConfig(({ command, mode }) => {
         '@': fileURLToPath(new URL('./src', import.meta.url))
       }
     },
-    base: '/gi-demo/',
+    base: '/',
     // 引入sass全局样式变量
     css: {
       preprocessorOptions: {
@@ -60,7 +60,7 @@ export default defineConfig(({ command, mode }) => {
         '/api': {
           target: env.VITE_APP_BASE_URL, // 后台服务器地址
           changeOrigin: true, // 是否允许不同源
-          secure: false, // 支持https
+          secure: true, // 支持https
           rewrite: (path) => path.replace(/^\/api/, '/')
         }
       }

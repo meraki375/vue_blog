@@ -67,8 +67,16 @@ export const useUserStore = defineStore({
     // 退出登录
     async logout() {
       try {
-        // await userLogout()
+        await userLogout()
         clearToken()
+      } catch (err) {
+        return err
+      }
+    },
+    // 修改个人信息
+    async editInfo(userInfo: any) {
+      try {
+        localStorage.setItem('UserInfo', JSON.stringify(userInfo))
       } catch (err) {
         return err
       }

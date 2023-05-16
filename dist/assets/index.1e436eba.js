@@ -1,0 +1,1 @@
+import{M as o,L as t}from"./index.3ca3cb15.js";function a(){return o.get("https://v1.hitokoto.cn/?c=b")}function i(){return t.get("api/message/info")}function n(e){return t.post("api//message/edit",e)}export{n as e,a as f,i as g};

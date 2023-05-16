@@ -13,9 +13,9 @@
             </a-space> 
             <div class="center" v-if="!props.onlytitle">
                 <icon-clock-circle style="margin: 10px; color: aliceblue;"/>
-                <p>{{props.form.createAt}}</p>
-                <icon-tag style="margin: 10px;color: aliceblue;"/>
-                <p>{{'分类'}}</p>
+                <p>{{dayjs().diff(props.form.updatedAt,'day')  + "天前"}}</p>
+                <icon-tag style="margin: 10px;color: aliceblue;" />
+                <p>{{props.form.className}}</p>
             </div>
         </template>
     </header>
@@ -24,6 +24,7 @@
 <script setup lang="ts" name="Wallpaper">
 import {IconPark} from '@icon-park/vue-next/es/all';
 import {onMounted, nextTick} from 'vue' 
+import dayjs from 'dayjs'
     onMounted(() => {
         nextTick(() => {
             const images = document.querySelectorAll('header > div > img')
