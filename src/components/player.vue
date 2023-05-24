@@ -7,7 +7,10 @@
         :type="props.type"
         :id="props.id"
         :autoplay="props.autoplay"
-        :fixed="props.fixed">
+        :fixed="props.fixed"
+        :listMaxHeight="props.listMaxHeight"
+        :mutex="props.mutex"
+        :listFolded="true">
     </meting-js>
 </template>
     
@@ -95,7 +98,7 @@ const props = defineProps({
         default: false
     },
     //最大高度
-    list_max_height:{
+    listMaxHeight:{
         type: String,
         default: ""
     },
@@ -106,6 +109,16 @@ const props = defineProps({
     },
     //吸底模式
     fixed:{
+        type: Boolean,
+        default: false
+    },
+    //互斥，阻止多个播放器同时播放，当前播放器播放时暂停其他播放器
+    mutex:{
+        type: Boolean,
+        default: true
+    },
+    //默认折叠
+    listFolded:{
         type: Boolean,
         default: false
     }

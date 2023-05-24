@@ -36,6 +36,28 @@
       <template #columns>
         <a-table-column title="编号" :width="66" align="center" data-index="id" ></a-table-column>
         <a-table-column title="文章标题" data-index="title" :width="120" align="center"></a-table-column>
+        <a-table-column title="文章分类" data-index="calssObj" :width="150" align="center">
+          <template #cell="{ record }">
+            <a-tag color="blue">
+              <template #icon>
+                <icon-bookmark />
+              </template>
+              {{ record.classObj?.name }}
+            </a-tag>
+          </template>  
+        </a-table-column>
+        <a-table-column title="文章标签" data-index="tabObj" :width="150" align="center">
+          <template #cell="{ record }">
+            <a-space>
+              <a-tag :color="colors[index]" v-for="(item, index ) in record.tabObj">
+                <template #icon>
+                  <icon-subscribed />
+                </template>
+                {{ item.name }}
+              </a-tag>
+            </a-space>
+          </template>  
+        </a-table-column>
         <a-table-column title="查看量" data-index="readCnt" :width="80" align="center"></a-table-column>
         <a-table-column title="发布人" data-index="senderName" :width="150" align="center"></a-table-column>
         <a-table-column title="发送时间" data-index="updatedAt" :width="150" align="center">
@@ -79,8 +101,8 @@ import { ref, reactive, getCurrentInstance } from 'vue'
 import { Message } from '@arco-design/web-vue'
 import { usePagination } from '@/hooks'
 import { getBlogList } from '@/apis'
-import type { ApiBlogItem } from '@/apis'
 import {useRouter } from 'vue-router'
+import { colors } from '../../utils/common'
 const { proxy }: any = getCurrentInstance()
  
 const router = useRouter()
@@ -91,7 +113,7 @@ const data = reactive({
 })
 
 const loading = ref(false)
-const tableData = ref<ApiBlogItem[]>([])
+const tableData = ref([]) as any
 
 const { current, pageSize, total, changeCurrent, changePageSize, setTotal } = usePagination(() => {
   getTableData()

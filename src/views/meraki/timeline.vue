@@ -8,10 +8,19 @@
         <div class="centent"> 
                 <a-timeline :style="{ marginRight: '100px' }" label-position="relative"> 
                 <a-timeline-item :label="dayjs(item.createAt).format('YYYY年MM月DD日 HH:mm:ss')" v-for="item in data.timeList">
-                    <template #dot>
-                        <IconClockCircle :style="{ fontSize: '12px', color: '#F53F3F' }" />
-                    </template>
-                    {{ item.title }}
+                    <a-row :style="{ display: 'inline-flex', alignItems: 'center' }">
+                        <img
+                            width="40"
+                            :style="{ marginRight: '16px', marginBottom: '12px' }"
+                            src="https://p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/b5d834b83708a269b4562924436eac48.png~tplv-uwbnlip3yd-png.png"
+                        />
+                        <div  :style="{ marginBottom: '12px' }">
+                            {{ item.title }}
+                            <div :style="{ fontSize: '12px', color: '#4E5969' }" v-if="item.introduce">
+                            {{ item.introduce.length > 15 ?  item.introduce.slice(0,15) + '...' : item.introduce}}
+                            </div>
+                        </div>
+                    </a-row>
                 </a-timeline-item>
                 
                 </a-timeline>

@@ -54,7 +54,7 @@ const routes: any = [
         name: '留言表',
         icon: '1dingdan',
         id: 'LYB',
-        component: () => import('@/views/meraki/home.vue'),
+        component: () => import('@/views/meraki/message.vue'),
         meta: { title: '留言表', keepAlive: false }
       },
       {

@@ -84,6 +84,14 @@ export const useMenuStore = defineStore({
         },
         {
           icon: 'menu-indicator',
+          id: 'BQGL',
+          name: '标签管理',
+          path: '/tab',
+          keepAlive: true,
+          hidden: false
+        },
+        {
+          icon: 'menu-indicator',
           id: 'ZBGL',
           name: '指标管理',
           path: '/indicator',

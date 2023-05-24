@@ -116,7 +116,7 @@
               
             </a-space>
           </template>
-          <template #cover >
+          <template #cover v-if="item.cover_url">
             <div style="overflow:hidden;  border-radius: 15px 15px 0 0; ">
               <img
                 class="card_img"
@@ -145,12 +145,19 @@
               
               <div style="font-size: 12px;">
                 <div class="start">
-                  <icon-clock-circle style="margin-right: 5px;"/>
-                  <a-typography-text type="secondary">{{dayjs().diff(item.updatedAt,'day')  + "天前"}}</a-typography-text>
+                  <a-space>
+                    <icon-clock-circle />
+                    <span>{{dayjs().diff(item.updatedAt,'day')  + "天前"}}</span>
+                  </a-space>
                 </div>
                 <div class="start">
-                  <icon-tag style="margin-right: 5px;"/>
-                  <a-typography-text type="secondary">{{item.classObj.name}}</a-typography-text>
+                  
+                  <a-space>
+                    <icon-tag />
+                    <span v-for="i in item.tabObj">
+                      {{ i.name }}
+                    </span>
+                  </a-space>
                 </div>
               </div>
             </template>
@@ -171,6 +178,7 @@ import { getWallpaperList_c, getMessage_c, getBlogList_c, getClassList_c} from '
 import { reactive, onActivated } from 'vue' 
 import {useRouter } from 'vue-router'
 import dayjs from 'dayjs'
+import { colors } from '../../utils/common'
 const router = useRouter()
 
 const iconList =[

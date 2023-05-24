@@ -1,5 +1,5 @@
 <template>
-    <div class="container flex" >
+    <div class="main-content flex" >
         <!--编辑器主题-->
         <div :class="props.border ? 'editor' : 'border'">
             <Toolbar style="border-bottom: 1px solid #ccc" :editor="editorRef" :defaultConfig="toolbarConfig" v-if="!props.readonly"/>
@@ -12,9 +12,8 @@
             />
         </div>
         <!-- 标题目录 -->
-        <a-affix :offset-top="0" :target="props.container " >
+        <a-affix :offset-top="0" :target="props.container">
           <div class="title" v-if="props.catalogue">
-            <span style="font-size: 22px;">标题目录</span>
             <a-anchor :change-hash="false" :scroll-container="props.container" v-if="props.container">
                 <a-anchor-link 
                     v-for="item in data.titleList" 
@@ -66,7 +65,9 @@ const props: any = defineProps({
 
 const data = reactive({
     titleList:[] as any,
+    isCatalogueFixed: false
 })
+
 const toolbarConfig = {}
 const editorConfig = { placeholder: '请输入内容...' } 
 // 编辑器实例，必须用 shallowRef
@@ -109,8 +110,8 @@ nextTick(() => {
 </script>
 
 <style lang="scss" scoped>
-.contaienr {
-  position: relative
+.main-content {
+  position: relative;
 }
 .editor {
   width: 100%;
@@ -129,7 +130,7 @@ nextTick(() => {
 }
 
 .title{
-    width: 200px; 
+    width: 220px; 
     background-color: #fff;
     padding: 10px;
 }

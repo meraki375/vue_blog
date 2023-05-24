@@ -17,28 +17,30 @@
                 <template #item="{ item }">
                 <a-list-item class="list-demo-item" action-layout="vertical"> 
                     <template #extra>
-                    <div className="image-area">
-                        <img alt="arco-design" :src="item.cover_url + '?imageMogr2/format/webp'" />
-                    </div>
+                        <div className="image-area">
+                            <img alt="arco-design" :src="item.cover_url + '?imageMogr2/format/webp'" />
+                        </div>
                     </template>
-                    <a-list-item-meta
-                    :title="item.title"
-                    :description="item.centent"
-                    >
-                     
-                    </a-list-item-meta>
+                    
+                    <template #meta>
+                        <div class="meta">
+                            <h3 >{{ item.title }}</h3>
+                            <span v-html="addLinkToURLs(item.centent)"></span>
+                        </div>
+                    </template>
                 </a-list-item>
                 </template>
             </a-list>
-            
+            <Comment :locale="{reactionTitle:'你认为有哪个笔记值得你收藏？'}" reaction></Comment>
         </div>
+        
         <Footer></Footer>
     </div>
 </template>
 <script setup lang="ts" name="Note">
 import { getNoteList_c } from '@/apis'
 import { reactive } from 'vue' 
-  
+import {addLinkToURLs} from '../../utils/common'
 const data = reactive({
     form:{
         title:'随手小记',
@@ -91,5 +93,11 @@ init()
 
 .list-demo-action-layout .arco-list-item-action .arco-icon {
   margin: 0 4px;
+}
+.meta{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
 }
 </style>

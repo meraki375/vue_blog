@@ -1,7 +1,7 @@
 <template>
     <div class="container" ref="containerRef" >
         <wallpaper :form="data.form"></wallpaper>
-        <div class="centent " >
+        <div class="centent "  >
             <div style="text-align: center;font-size: 16px;">
                 <p>{{`提醒：本文已经超过${dayjs().diff(dayjs(data.form.updatedAt), 'day')}天未修改，其中某些信息可能已经过时，请谨慎使用！`}}</p>
                 <p>你似乎正在查看一篇很久远的文章。</p>
@@ -17,11 +17,13 @@
                 :container="containerRef"
             >
 
-            </Editor> 
+            </Editor>
+            <Comment class="comment"  reaction></Comment>
             <Footer></Footer>
         </div>
         
     </div>
+
 </template>
 
 <script setup lang="ts" name="Mblog">
@@ -56,11 +58,15 @@ onActivated(() => {
 
 <style lang="scss" scoped>
 .centent{
-    width: 75%; 
-    margin: 30px auto;
+    padding: 30px 12%;
 }
 .container{
     background-color: #fff;
-    overflow-y: auto;
+    overflow-y: scroll;
+}
+.comment{
+    z-index: 999;
+    position: relative; 
+    background: #fff;
 }
 </style>

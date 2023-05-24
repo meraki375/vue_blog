@@ -69,3 +69,30 @@ export function isEmpty(data: unknown) {
   }
   return false
 }
+
+//匹配字符串的网址转化为a链接
+export function addLinkToURLs(text:string) {
+  // 正则表达式匹配网址的模式
+  const urlPattern = /(https?:\/\/[^\s]+)/g;
+  
+  // 使用 replace 方法替换匹配到的网址为链接格式
+  const replacedText = text.replace(urlPattern, '<a href="$&" target="_blank">$&</a>');
+
+  return replacedText;
+}
+
+export const colors = [
+  'red',
+  'orangered',
+  'orange',
+  'gold',
+  'lime',
+  'green',
+  'cyan',
+  'blue',
+  'arcoblue',
+  'purple',
+  'pinkpurple',
+  'magenta',
+  'gray'
+];
