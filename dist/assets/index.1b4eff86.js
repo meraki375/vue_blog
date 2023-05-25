@@ -1,1 +1,0 @@
-import{_ as c,o as s,a as o,p as t,l as _,i as a}from"./index.3ca3cb15.js";const d={},n=e=>(t("data-v-2cc96da0"),e=e(),_(),e),r={class:"link-page"},p=n(()=>a("iframe",{src:"https://juejin.cn/frontend",frameborder:"0"},null,-1)),i=[p];function l(e,f){return s(),o("div",r,i)}const h=c(d,[["render",l],["__scopeId","data-v-2cc96da0"]]);export{h as default};

@@ -1,0 +1,1 @@
+import{R as o}from"./index.69214aa4.js";function e(t){return o.get("api/blog/list",t)}function g(t){return o.post("api/blog/edit",t)}function n(t){return o.get("api/blog/info",t)}export{n as a,g as e,e as g};

@@ -1,0 +1,1 @@
+import{R as t}from"./index.69214aa4.js";const s="/mock";function i(e){return t.get("api/system/user/list",e)}function n(e){return t.post("api/system/user/edit",e)}function o(e){return t.delete("api/system/user/del",e)}function u(){return t.get(`${s}/system/role/list`)}export{u as a,o as d,n as e,i as g};
