@@ -13,7 +13,7 @@ import { useRoute } from 'vue-router';
 
 import '@waline/client/dist/waline.css';
 
-const serverURL = 'https://comment-system-pink.vercel.app';
+const serverURL = 'http://106.55.224.41/';
 const path = computed(() => useRoute().fullPath);
 
 const props: any = defineProps({
