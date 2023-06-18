@@ -16,7 +16,13 @@ export function getBlog(data: any) {
   return axios.get('api/blog/info', data)  
 }
 
-// /** @desc 获取角色数据 */
-// export function getSystemRoleList() {
-//   return axios.get<IResListData<ApiRoleItem[]>>(`${prefix}/system/role/list`)
-// }
+/** @desc 删除博客 */
+export function delBlog(data: any) {
+  return axios.post('api/blog/del', data)  
+}
+
+/** @desc 修改博客状态 */
+export function blogStatus(data: any) {
+  return axios.post('api/blog/status', data)  
+}
+

@@ -4,6 +4,8 @@
         :path="path"  
         :reaction="props.reaction" 
         :locale="locale"
+        :pageview="true"
+        :comment="true"
     />
   </template>
 <script setup lang="ts" name="Comment">
@@ -13,7 +15,7 @@ import { useRoute } from 'vue-router';
 
 import '@waline/client/dist/waline.css';
 
-const serverURL = 'http://106.55.224.41/';
+const serverURL = 'https://aaa.craica.cn/';
 const path = computed(() => useRoute().fullPath);
 
 const props: any = defineProps({

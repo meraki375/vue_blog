@@ -55,13 +55,13 @@
         </GiTable>
     
         <GiFooter></GiFooter>
-        <a-modal v-model:visible="visible" @ok="handleOk" @cancel="handleCancel">
+        <a-modal v-model:visible="visible">
             <template #title>
             {{ data.form.id ? '编辑笔记' : '新增笔记' }}
             </template>
             <div>
                 <a-form :model="data.form" ref="formRef">
-                    <a-form-item field="cover_url" label="笔记封面">
+                    <a-form-item field="cover_url" label="笔记封面" >
                         <Mupload
                             :fileList="data.fileList"
                             fileKey="cover_url"
@@ -69,28 +69,44 @@
                             uploadFolder="image"
                         ></Mupload>
                     </a-form-item>
-                    <a-form-item field="title" label="笔记标题">
+                    <a-form-item field="title" label="笔记标题" :rules="rules.title">
                         <a-input placeholder="请输入笔记标题..." allow-clear style="width: 250px" v-model="data.form.title"> </a-input>
                     </a-form-item>
-                    <a-form-item field="centent" label="笔记内容">
-                        <a-textarea placeholder="请输入笔记内容..." allow-clear v-model="data.form.centent"> </a-textarea>
+                    <a-form-item field="url" label="笔记网址" :rules="rules.url">
+                        <a-input placeholder="请输入笔记网址..." allow-clear style="width: 250px" v-model="data.form.url"> </a-input>
+                    </a-form-item>
+                    <a-form-item field="content" label="笔记内容" :rules="rules.content">
+                        <a-textarea placeholder="请输入笔记内容..." allow-clear v-model="data.form.content"> </a-textarea>
                     </a-form-item>
                     <a-form-item field="status" label="上下架">
                         <a-switch v-model="data.form.status" :checked-value="1" :unchecked-value="0" />
                     </a-form-item>
                 </a-form>
             </div>
+            <template #footer>
+                <a-space>
+                    <a-button type="primary" @click="handleOk()">确认</a-button>
+                    <a-button @click="handleCancel()">取消</a-button>
+                </a-space>
+            </template>
         </a-modal>
         </div>
     </template>
   
 <script setup lang="ts" name="Note">
-import { ref, reactive, getCurrentInstance } from 'vue'
+import { ref, reactive, getCurrentInstance, nextTick } from 'vue'
 import { Message } from '@arco-design/web-vue'
 import { usePagination } from '@/hooks'
 import { getNoteList, editNote, delNote } from '@/apis'
-import type { ApiBlogItem } from '@/apis'
 const { proxy }: any = getCurrentInstance()
+
+const rules = {
+  title: [{ required: true, message: '请输入标题', trigger: 'change'  }],
+  content: [{ required: true, message: '请输入内容', trigger: 'change'  }],
+  url: [
+    { required: true, message: '请输入网络', trigger: 'change' },
+  ],
+}
 
 const data = reactive({
     q: '',
@@ -98,7 +114,8 @@ const data = reactive({
     form: {
         id: 0,
         title: '',
-        centent:'',
+        content:'',
+        url:'',
         cover_url:[],
         status: 1
     },
@@ -106,7 +123,7 @@ const data = reactive({
 })
 
 const loading = ref(false)
-const tableData = ref<ApiBlogItem[]>([])
+const tableData = ref<any>([])
 const visible = ref(false);
 const { current, pageSize, total, changeCurrent, changePageSize, setTotal } = usePagination(() => {
     getTableData()
@@ -136,13 +153,17 @@ const getTableData = async () => {
 getTableData()
 
 const onAdd = () => {
-    data.form.id = 0
+    nextTick(()=>{
+        data.form.id = 0
+        data.fileList =[]
+    })
+   
     proxy.$refs.formRef.resetFields()
     return visible.value = true;
 };
 
 const onEdit = (elem:any) =>{
-    data.form = elem
+    data.form = {...elem}
     if(elem.cover_url){
         data.fileList = [{ url:  elem.cover_url }]
     }
@@ -170,20 +191,27 @@ const onDelete = async(id:number) => {
 }   
 
 const handleOk = async() => {
-    let res = await editNote({
-        title: data.form.title,
-        centent: data.form.centent,
-        cover_url: data.form.cover_url,
-        status: data.form.status,
-        id: data.form.id
+    proxy.$refs.formRef.validate(async(valid:any) => {
+        if(!valid){
+            let res = await editNote({
+                title: data.form.title,
+                content: data.form.content,
+                cover_url: data.form.cover_url,
+                url: data.form.url,
+                status: data.form.status,
+                id: data.form.id
+            })
+            if(res.code === 201){
+                getTableData()
+                Message.success(res.message)
+                visible.value = false;
+            }else{
+                Message.error(res.message)
+            }
+        }else{
+            visible.value = true;
+        }
     })
-    if(res.code === 201){
-        getTableData()
-        Message.success(res.message)
-        visible.value = false;
-    }else{
-        Message.error(res.message)
-    }
     
 };
 const handleCancel = () => {

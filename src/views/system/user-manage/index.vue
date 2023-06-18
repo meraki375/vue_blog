@@ -1,7 +1,7 @@
 <template>
   <div class="user-manage">
      
-    <section class="centent">
+    <section class="content">
       <GiTitle title="用户列表"></GiTitle>
         
       <a-row justify="space-between" class="head">
@@ -295,7 +295,7 @@ const confirm = async(e: MouseEvent) => {
       padding-left: 4px;
     }
   }
-  > .centent {
+  > .content {
     flex: 4;
     height: 100%;
     display: flex;

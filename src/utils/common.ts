@@ -1,3 +1,7 @@
+import dayjs from 'dayjs'
+import duration from 'dayjs/plugin/duration';
+
+dayjs.extend(duration);
 /** 常见公共方法 */
 
 /**
@@ -70,7 +74,12 @@ export function isEmpty(data: unknown) {
   return false
 }
 
-//匹配字符串的网址转化为a链接
+/**
+ * 将字符串中的网址转化为链接形式。
+ *
+ * @param {string} text - 要处理的文本字符串。
+ * @returns {string} - 转化后的字符串，其中的网址已被替换为链接形式。
+ */
 export function addLinkToURLs(text:string) {
   // 正则表达式匹配网址的模式
   const urlPattern = /(https?:\/\/[^\s]+)/g;
@@ -80,6 +89,37 @@ export function addLinkToURLs(text:string) {
 
   return replacedText;
 }
+
+
+/**
+ * 计算给定时间戳与当前时间之间的时间差，并返回格式化后的时间差字符串。
+ *
+ * @param {number} insertedAtTimestamp - 插入时间的时间戳。
+ * @returns {string} - 格式化后的时间差字符串。
+ */
+export function getTimeDifferenceString(insertedAtTimestamp:any) {
+  // 获取当前时间
+  const currentTime = dayjs();
+
+  // 将时间戳转换为dayjs对象
+  const insertedAt = dayjs(insertedAtTimestamp);
+
+  // 计算时间差
+  const duration = dayjs.duration(currentTime.diff(insertedAt));
+
+  // 获取最大的时间单位
+  const units = ['years', 'months', 'weeks', 'days', 'hours', 'minutes', 'seconds'];
+  const maxUnit = units.find(unit => duration.get(unit as any) > 0);
+
+  // 获取时间差值
+  const timeDifference = duration.get(maxUnit as any);
+
+  // 构建时间差字符串
+  let timeDifferenceString = `${timeDifference.toFixed()} ${maxUnit}`;
+
+  return timeDifferenceString;
+}
+
 
 export const colors = [
   'red',
@@ -94,5 +134,101 @@ export const colors = [
   'purple',
   'pinkpurple',
   'magenta',
-  'gray'
+  'gray',
+  'rgb(255, 0, 0)',
+  'rgb(255, 69, 0)',
+  'rgb(255, 165, 0)',
+  'rgb(255, 215, 0)',
+  'rgb(0, 255, 0)',
+  'rgb(0, 128, 0)',
+  'rgb(0, 255, 255)',
+  'rgb(0, 0, 255)',
+  'rgb(0, 51, 204)',
+  'rgb(128, 0, 128)',
+  'rgb(204, 51, 153)',
+  'rgb(255, 0, 255)',
+  'rgb(128, 128, 128)',
+  'rgb(255, 255, 0)',
+  'rgb(128, 0, 0)',
+  'rgb(255, 192, 203)',
+  'rgb(218, 112, 214)',
+  'rgb(0, 255, 127)',
+  'rgb(255, 255, 255)',
+  'rgb(0, 0, 0)',
+  'rgb(255, 99, 71)',
+  'rgb(139, 0, 0)',
+  'rgb(255, 165, 79)',
+  'rgb(218, 165, 32)',
+  'rgb(50, 205, 50)',
+  'rgb(0, 128, 128)',
+  'rgb(70, 130, 180)',
+  'rgb(138, 43, 226)',
+  'rgb(75, 0, 130)',
+  'rgb(148, 0, 211)',
+  'rgb(128, 128, 0)',
+  'rgb(244, 164, 96)',
+  'rgb(255, 255, 224)',
+  'rgb(240, 230, 140)',
+  'rgb(240, 248, 255)',
+  'rgb(245, 245, 245)',
+  'rgb(128, 0, 0)',
+  'rgb(0, 0, 128)'
 ];
+
+export function getRandomColor() {
+  const colors = [
+    'red',
+    'orangered',
+    'orange',
+    'gold',
+    'lime',
+    'green',
+    'cyan',
+    'blue',
+    'arcoblue',
+    'purple',
+    'pinkpurple',
+    'magenta',
+    'gray',
+    'rgb(255, 0, 0)',
+    'rgb(255, 69, 0)',
+    'rgb(255, 165, 0)',
+    'rgb(255, 215, 0)',
+    'rgb(0, 255, 0)',
+    'rgb(0, 128, 0)',
+    'rgb(0, 255, 255)',
+    'rgb(0, 0, 255)',
+    'rgb(0, 51, 204)',
+    'rgb(128, 0, 128)',
+    'rgb(204, 51, 153)',
+    'rgb(255, 0, 255)',
+    'rgb(128, 128, 128)',
+    'rgb(255, 255, 0)',
+    'rgb(128, 0, 0)',
+    'rgb(255, 192, 203)',
+    'rgb(218, 112, 214)',
+    'rgb(0, 255, 127)',
+    'rgb(255, 255, 255)',
+    'rgb(0, 0, 0)',
+    'rgb(255, 99, 71)',
+    'rgb(139, 0, 0)',
+    'rgb(255, 165, 79)',
+    'rgb(218, 165, 32)',
+    'rgb(50, 205, 50)',
+    'rgb(0, 128, 128)',
+    'rgb(70, 130, 180)',
+    'rgb(138, 43, 226)',
+    'rgb(75, 0, 130)',
+    'rgb(148, 0, 211)',
+    'rgb(128, 128, 0)',
+    'rgb(244, 164, 96)',
+    'rgb(255, 255, 224)',
+    'rgb(240, 230, 140)',
+    'rgb(240, 248, 255)',
+    'rgb(245, 245, 245)',
+    'rgb(128, 0, 0)',
+    'rgb(0, 0, 128)'
+  ];
+  const randomIndex = Math.floor(Math.random() * colors.length);
+  return colors[randomIndex];
+}

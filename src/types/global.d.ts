@@ -27,7 +27,11 @@ interface HttpResponse<T = unknown> {
 tabs: any
 article: {
 tabs: any
-cover_url: any title: string; centent: string; class: any; status: number 
+cover_url: any,
+title: string;
+content: string;
+class: any;
+status: number 
 }
 list: { pageSize: number; current: number; q: string; date: string }[]
 count(count: any): unknown

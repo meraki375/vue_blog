@@ -65,8 +65,8 @@
         </div>
       </a-col>
     </a-row>
-    <a-row class="grid-centent" :align="'stretch'" justify="center">
-      <a-col :span="15" >
+    <a-row class="grid-content" :align="'stretch'" justify="center">
+      <a-col  :xs="24" :sm="24" :md="20" :lg="20" :xl="16" :xxl="16">
         <div class="aplayer">
           <div style="padding: 0 20px;">
             <IconPark type="announcement" theme="outline" :size="'22px'" fill="#fff"/>
@@ -81,89 +81,109 @@
               indicator-type="never"
               @change="handleChange"
             >
-              <a-carousel-item v-for="item in data.blogList">
-                
-                <div class="flex wh100 bg" style="flex-direction: column; align-items: flex-start;">
-                  
-                  <div>
-                    {{ `#${item.title}`  }}
+              <a-carousel-item v-for="item in data.blogList" :key="item.id">
+                <div  class="flex wh100" style="display: flex;">
+                  <div class="flex wh100 bg" style="flex-direction: column; align-items: flex-start;">
+                    
+                    <div>
+                      {{ `#${item.title}`  }}
+                    </div>
+                    <span>
+                      {{ item.introduce }}
+                    </span>
+                    
                   </div>
-                  <span>
-                    {{ item.introduce }}
-                  </span>
-                  
+                  <div class="flex" style="margin-right: 20px; position: relative;">
+                      <IconPark style="margin-right: 20px;" type="like" theme="two-tone" size="36" :fill="['#fff' ,'#2F88FF']"  :strokeWidth="4" strokeLinejoin="miter" @click="islike(item.id)"/>
+                      <div :class="[ data.isLikeNum ? 'offset-up': 'offset-down']">
+                        {{ "+" + data.likeNum }}
+                      </div>
+
+                  </div>
                 </div>
+                
               </a-carousel-item>
             </a-carousel>
+            
           </div>
-          <div style="padding: 0 20px;">
-            <IconPark type="like" theme="two-tone" size="27" :fill="['#fff' ,'#2F88FF']"  :strokeWidth="2" strokeLinejoin="miter"/>
-          </div>
+          
           
         </div>
       </a-col>
-      
-      <a-col :span="15" class="blog-list"> 
-        <a-card class="card" v-for="item in data.blogList" hoverable @click="onDetails(item.id, item.title)">
-          <template #actions>
-            <a-space :size="40">
-              
-                <icon-heart />
-
-                <icon-eye />
-                
-                <icon-star />
-              
-            </a-space>
-          </template>
-          <template #cover v-if="item.cover_url">
-            <div style="overflow:hidden;  border-radius: 15px 15px 0 0; ">
-              <img
-                class="card_img"
-                alt="dessert"
-                :src="item.cover_url + '?imageMogr2/format/webp'"
-              />
-            </div>
-          </template>
-          <a-card-meta  @click="onDetails(item.id, item.title)">
-            <template #title >
-              <div
-                :style="{ display: 'flex', alignItems: 'center', color: '#1D2129' }"
-              >
-                <svg class="icon" style="font-size:12px" aria-hidden="true" >
-                  <use :xlink:href="getIconByClassId(item.classId).code"></use>
-                </svg>
-                <p :style="{ color: getIconByClassId(item.classId).color,fontFamily: 'Helvetica',fontSize:'12px',marginLeft:'5px'}">{{ item.classObj.name }}</p>
-              </div>
-              <p style="font-size:20px">{{ item.title }}</p>
-              
-            </template>
-            <template #description >
-              {{item.introduce}}
-            </template>
-            <template #avatar>
-              
-              <div style="font-size: 12px;">
-                <div class="start">
-                  <a-space>
-                    <icon-clock-circle />
-                    <span>{{dayjs().diff(item.updatedAt,'day')  + "天前"}}</span>
-                  </a-space>
+     
+      <a-col :xs="24" :sm="24" :md="20" :lg="20" :xl="16" :xxl="16" style="padding: 3px;">
+        <a-row  :gutter="{ xs: 0, sm: 0, md: 0, lg: 0, xl: 24, xxl: 24 }" justify="center">
+          <a-col class="blog-list" :xs="24" :sm="24" :md="24" :lg="24" :xl="17" :xxl="16" >
+            <a-card class="card" v-for="item in data.blogList" hoverable @click="onDetails(item.id)">
+              <template #actions>
+                  <span class="icon-hover"> <icon-heart-fill /> {{ item.likeNum }}人觉得很赞 </span>
+                  <span class="icon-hover"> <icon-eye /> {{ item.readCnt }}次浏览  </span>
+              </template>
+              <template #cover v-if="item.cover_url">
+                <div style="overflow:hidden;  border-radius: 15px 15px 0 0; ">
+                  <img
+                    class="card_img"
+                    alt="dessert"
+                    :src="item.cover_url + '?imageMogr2/format/webp'"
+                  />
                 </div>
-                <div class="start">
+              </template>
+              <a-card-meta  @click="onDetails(item.id)">
+                <template #title >
+                  <div
+                    :style="{ display: 'flex', alignItems: 'center', color: '#1D2129' }"
+                  >
+                    <svg class="icon" style="font-size:12px" aria-hidden="true" >
+                      <use :xlink:href="getIconByClassId(item.classId).code"></use>
+                    </svg>
+                    <p :style="{ color: getIconByClassId(item.classId).color,fontFamily: 'Helvetica',fontSize:'12px',marginLeft:'5px'}">{{ item.className }}</p>
+                  </div>
+                  <div style="word-wrap: break-word; overflow-wrap: break-word; font-size:20px">{{ item.title }}</div>
                   
-                  <a-space>
-                    <icon-tag />
-                    <span v-for="i in item.tabObj">
-                      {{ i.name }}
-                    </span>
-                  </a-space>
-                </div>
-              </div>
-            </template>
-          </a-card-meta>
-        </a-card>
+                </template>
+                <template #description >
+                  {{item.introduce}}
+                </template>
+                <template #avatar>
+                  
+                  <div style="font-size: 12px;">
+                    <div class="start">
+                      <a-space>
+                        <icon-clock-circle />
+                        <span>{{dayjs().diff(item.updatedAt,'day')  + "天前"}}</span>
+                      </a-space>
+                    </div>
+                    <div class="start">
+                      
+                      <a-space>
+                        <icon-tag />
+                        <span v-for="i in item.tabNames.split(',')">
+                          {{ i || '暂无标签' }} 
+                        </span>
+                      </a-space>
+                    </div>
+                  </div>
+                </template>
+              </a-card-meta>
+            </a-card>
+          </a-col>
+          <a-col :xs="0" :sm="0" :md="0" :lg="0" :xl="7" :xxl="8" >
+            <div class="RecentComments">
+              <comments :commentCount="data.commentCount" :userCount="data.userCount" v-if="data.commentCount"></comments>
+            </div>
+          
+          </a-col>
+        </a-row>
+        
+       
       </a-col>
+      
+      <a-row class="grid-content" :align="'stretch'" justify="center">
+        <a-col :span="6" style="">
+          <a-button size="large" long  :loading="data.loading" style="background-color: #83C1F1;color: white;" @click="init(7)">加载更多</a-button>
+        </a-col>
+      </a-row>
+      
        <Footer></Footer>
     </a-row>
   
@@ -174,11 +194,13 @@
 <script setup lang="ts" name="Home">
 import "../../assets/icon/iconfont.js"
 import {IconPark} from '@icon-park/vue-next/es/all';
-import { getWallpaperList_c, getMessage_c, getBlogList_c, getClassList_c} from '@/apis'
-import { reactive, onActivated } from 'vue' 
+import { getWallpaperList_c, getMessage_c, getBlogList_c, getClassList_c, articleLike} from '@/apis'
+import comments from './components/comments.vue'
+import { reactive, onActivated } from 'vue'
+import { Notification,  } from '@arco-design/web-vue';
 import {useRouter } from 'vue-router'
 import dayjs from 'dayjs'
-import { colors } from '../../utils/common'
+
 const router = useRouter()
 
 const iconList =[
@@ -200,48 +222,88 @@ const iconList1 =[
 
 ]
 const data = reactive({
+  loading:false,
   params:{
-    pageSize: 10,
+    pageSize: 7,
     current: 1,
-    q:'',
-    date:''
+    status: 1
   },
   images: [] as any,
   blogList: [] as any,
-  centent:'',
+  content:'',
   classList:[],
   classCount:'',
   count:'',
-  msgIndex:1
+  msgIndex:1,
+  likeNum: 0,
+  isLikeNum:false,
+  commentCount: 0,
+  userCount: 0,
 })
-const init = async () => {
-  await getBlogList_c(data.params).then((res:any)=>{
-    data.blogList = res.list
-    data.count = res.count
-  })
-  await getClassList_c(data.params).then((res:any)=>{
-    data.classList = res.list
-    data.classCount = res.count
-  })
-  let res:any = await getMessage_c()
-  data.centent = res.data.centent
+const init = async (value?: any) => {
+  data.loading = true
+  if (value) {
+    data.params.pageSize = data.params.pageSize + value
+    await getBlogList_c(data.params).then((res: any) => {
+      data.blogList = res.list
+      data.count = res.count
+      data.commentCount = res.commentCount
+      data.userCount = res.usersCount
+      data.loading = false
+      if(res.count === res.list.length){
+        Notification.info({
+          title: '我想和你说：',
+          content: '没有更多内容啦，不要再点啦!',
+          position: 'bottomRight',
+          closable: true,
+        })
+      }
+    })
+  } else {
+    await Promise.all([
+      getBlogList_c(data.params).then((res: any) => {
+        data.blogList = res.list
+        data.count = res.count
+        data.commentCount = res.commentCount
+        data.userCount = res.usersCount
+        data.loading = false
+      }),
+      getClassList_c(data.params).then((res: any) => {
+        data.classList = res.list
+        data.classCount = res.count
+      }),
+      getMessage_c().then((res: any) => {
+        data.content = res.data.content
+      })
+    ])
+  }
 }
-const onDetails = (id:number, title:string) =>{
-  return router.push({ path: '/meraki/blog', query: { id: id, title:title }})
+
+
+const onDetails = (id:number) =>{
+  return router.push({ path: '/meraki/blog', query: { id: id }})
 }
 const handleChange =(value:number)=>{
   data.msgIndex = value
-  console.log(value)
 }
 const getIconByClassId = (classId:number)=> {
   return iconList1.find((icon:any) => icon.value === classId) || iconList1[0]
 }
 const getWallpaper = async()=>{
   await getWallpaperList_c({type:1,pageSize:10,current:1}).then((res:any)=>{
-        if(res.code === 200){
-            data.images = res.list
-        }
-    })
+    if(res.code === 200){
+      data.images = res.list
+    }
+  })
+}
+const islike = async(id:any)=>{
+  await articleLike({path:`/meraki/blog?id=${id}`, type:'reaction0'}).then((res:any)=>{
+    data.likeNum = res
+    data.isLikeNum = true
+    setTimeout(()=>{
+      data.isLikeNum = false
+    }, 1500);
+  })
 }
 getWallpaper()
 onActivated(() => {
@@ -281,7 +343,7 @@ onActivated(() => {
   height:100%;
   position: relative;
 }
-.centent{
+.content{
   justify-content: center;
   width: 100%;
   height: 100%;
@@ -426,12 +488,13 @@ onActivated(() => {
     font-size:24px;
   }
 }
-.grid-centent{ 
+.grid-content{ 
   width: 100%;
   height: auto;
   margin: 20px 0;
 }
 .card{
+  // min-width: 275px;
   border-radius: 15px;
   margin: 0 0 20px 0;
   border: 1px solid #ccc;
@@ -501,6 +564,13 @@ onActivated(() => {
   column-count: 2; //多列的列数
   column-gap: 20px; /* 设置列之间的间距 */
 }
+
+@media (max-width: 575px) {
+  /* 当窗口大小小于576px时，应用以下样式 */
+  .blog-list {
+    column-count: 1; /* 将列数改为一列 */
+  }
+}
 .blog-item {
   break-inside: avoid; /* 防止元素被拆分到不同列 */
   margin-bottom: 20px; /* 设置元素之间的间距 */
@@ -512,5 +582,34 @@ onActivated(() => {
   border-radius: 15px;
   background: #83C1F1;
   color: white;
+}
+
+.offset-up {
+  position: absolute;
+  left: 35px;
+  opacity: 1;
+  animation: glowto1 2s ease-in-out alternate forwards;
+}
+.offset-down{
+  position: absolute;
+  left: 35px;
+  opacity: 0;
+
+}
+ 
+@keyframes glowto1 {
+  0% {
+    transform: translateY(10px);
+  }
+  100% {
+    transform: translateY(-30px);
+  }
+}
+.RecentComments{
+  margin: 20px 0;
+  width: 100%;
+  height: 400px;
+  border-radius: 15px;
+  border: 1px solid #83C1F1;
 }
 </style>

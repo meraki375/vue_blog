@@ -1,7 +1,7 @@
 <template>
     <div class="contain">
         <Editor 
-            :formKey="'centent'"
+            :formKey="'content'"
             :form="data.form"
             :catalogue="false"
         >
@@ -17,13 +17,13 @@ import { editMessage, getMessage, } from '@/apis'
 import { Message } from '@arco-design/web-vue'
 const data = reactive({
     form: {
-        centent: '',
+        content: '',
     }
 })
 
 const init = async () =>{
   const res:any = await getMessage()
-  data.form.centent = res.data.centent
+  data.form.content = res.data.content
 }
 const edit = async () =>{   
     const res = await editMessage(data.form)

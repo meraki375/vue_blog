@@ -1,5 +1,6 @@
 import axio from 'axios'
-import axios from '@/utils/http' 
+import axios from '@/utils/http'
+import waline from '@/utils/waline' 
 /** @desc 获取动漫每日一言 */
 export function fetchHitokoto() {
     return axio.get(`https://v1.hitokoto.cn/?c=b`)
@@ -40,3 +41,32 @@ export function getPrivacy_c(data:any) {
     return axios.get(`api/craica/privacy/info`, data)
 }
 
+/** @desc 获取某篇文章的评论数 */
+export function getComment_count(data:any) {
+    return waline.get(`https://aaa.craica.cn/api/comment?type=count`, data)
+}
+
+/** @desc 获取某篇文章的评论数 */
+export function getArticle_count(data:any) {
+    return waline.post(`https://aaa.craica.cn/api/article`, data)
+}
+
+/** @desc 点赞某篇文章 */
+export function articleLike(data:any) {
+    return waline.post(`https://aaa.craica.cn/article?lang=zh-CN`, data)
+}
+
+/** @desc 获取最近的评论 */
+export function getconmentList(data:any) {
+    return waline.get(`https://aaa.craica.cn/comment`, data)
+}
+
+/** @desc 点赞某条评论 */
+export function conmentLike(data:any) {
+    return waline.put(`https://aaa.craica.cn/comment/${data.id}`, data)
+}
+
+/** @desc 获取用户排行 */
+export function getrankList(data:any) {
+    return waline.get(`https://aaa.craica.cn/user`, data)
+}

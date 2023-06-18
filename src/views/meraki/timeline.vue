@@ -5,25 +5,26 @@
             :onlytitle=true
              >
         </wallpaper>
-        <div class="centent"> 
+        <div class="content">
+            <a-row >
                 <a-timeline :style="{ marginRight: '100px' }" label-position="relative"> 
-                <a-timeline-item :label="dayjs(item.createAt).format('YYYY年MM月DD日 HH:mm:ss')" v-for="item in data.timeList">
-                    <a-row :style="{ display: 'inline-flex', alignItems: 'center' }">
-                        <img
-                            width="40"
-                            :style="{ marginRight: '16px', marginBottom: '12px' }"
-                            src="https://p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/b5d834b83708a269b4562924436eac48.png~tplv-uwbnlip3yd-png.png"
-                        />
-                        <div  :style="{ marginBottom: '12px' }">
-                            {{ item.title }}
-                            <div :style="{ fontSize: '12px', color: '#4E5969' }" v-if="item.introduce">
-                            {{ item.introduce.length > 15 ?  item.introduce.slice(0,15) + '...' : item.introduce}}
+                    <a-timeline-item :label="dayjs(item.createAt).format('YYYY年MM月DD日')" v-for="item in data.timeList" >
+                        <a-row :style="{ display: 'inline-flex', alignItems: 'center' }" @click="isClick(item.id)">
+                            <img
+                                width="40"
+                                :style="{ marginRight: '16px', marginBottom: '12px', objectFit: 'fill' }"
+                                :src="item.cover_url || 'https://p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/b5d834b83708a269b4562924436eac48.png~tplv-uwbnlip3yd-png.png'"
+                            />
+                            <div :style="{ marginBottom: '12px' }">
+                                {{ item.title }}
+                                <div :style="{ fontSize: '12px', color: '#4E5969' }" v-if="item.introduce">
+                                {{ item.introduce.length > 15 ?  item.introduce.slice(0,15) + '...' : item.introduce}}
+                                </div>
                             </div>
-                        </div>
-                    </a-row>
-                </a-timeline-item>
-                
+                        </a-row>
+                    </a-timeline-item>
                 </a-timeline>
+            </a-row >
         </div>
         <Footer></Footer>
     </div>
@@ -33,6 +34,8 @@
 import dayjs from 'dayjs'
 import { getBlogList_c} from '@/apis'
 import { reactive } from 'vue'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 const data = reactive({
     form:{
         title:'时间线',
@@ -51,17 +54,22 @@ const init =  () => {
         data.timeList = res.list
     })
 }
+
+const isClick  = (id:any) =>{
+    return router.push({ path: '/meraki/blog', query: { id: id }})
+}
 init()
 </script>
 
 <style lang="scss" scoped>
-.centent{
+.content{
     width: 70%;
     height: 100%;
     margin: 30px auto;
 }
 .container{
-    background-color: #fff;
+    width: 100%;
+    height: 100%;
     overflow-y: auto;
     padding-bottom: 20px;
 }

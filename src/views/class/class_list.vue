@@ -80,7 +80,6 @@ import { ref, reactive, getCurrentInstance } from 'vue'
 import { Message } from '@arco-design/web-vue'
 import { usePagination } from '@/hooks'
 import { getClassList, editClass, delClass } from '@/apis'
-import type { ApiBlogItem } from '@/apis'
 const { proxy }: any = getCurrentInstance()
 
 const data = reactive({
@@ -94,7 +93,7 @@ const data = reactive({
 })
 
 const loading = ref(false)
-const tableData = ref<ApiBlogItem[]>([])
+const tableData = ref<any>([])
 const visible = ref(false);
 const { current, pageSize, total, changeCurrent, changePageSize, setTotal } = usePagination(() => {
     getTableData()

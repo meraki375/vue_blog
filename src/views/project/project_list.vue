@@ -41,7 +41,7 @@
                             </template>
                             <a-list-item-meta
                             :title="record.title"
-                            :description="record.centent"
+                            :description="record.content"
                             >
                             <template #avatar>
                                 <a-avatar shape="square">
@@ -101,8 +101,8 @@
                     <a-form-item field="title" label="笔记标题">
                         <a-input placeholder="请输入笔记标题..." allow-clear style="width: 250px" v-model="data.form.title"> </a-input>
                     </a-form-item>
-                    <a-form-item field="centent" label="笔记内容">
-                        <a-textarea placeholder="请输入笔记内容..." allow-clear v-model="data.form.centent"> </a-textarea>
+                    <a-form-item field="content" label="笔记内容">
+                        <a-textarea placeholder="请输入笔记内容..." allow-clear v-model="data.form.content"> </a-textarea>
                     </a-form-item>
                     <a-form-item field="status" label="上下架">
                         <a-switch v-model="data.form.status" :checked-value="1" :unchecked-value="0" />
@@ -118,7 +118,6 @@ import { ref, reactive, getCurrentInstance } from 'vue'
 import { Message } from '@arco-design/web-vue'
 import { usePagination } from '@/hooks'
 import { getNoteList, editNote, delNote } from '@/apis'
-import type { ApiBlogItem } from '@/apis'
 const { proxy }: any = getCurrentInstance()
 
 const data = reactive({
@@ -127,7 +126,7 @@ const data = reactive({
     form: {
         id: 0,
         title: '',
-        centent:'',
+        content:'',
         cover_url:[],
         status: 1
     },
@@ -135,7 +134,7 @@ const data = reactive({
 })
 
 const loading = ref(false)
-const tableData = ref<ApiBlogItem[]>([])
+const tableData = ref<any>([])
 const visible = ref(false);
 const { current, pageSize, total, changeCurrent, changePageSize, setTotal } = usePagination(() => {
     getTableData()
@@ -201,7 +200,7 @@ const onDelete = async(id:number) => {
 const handleOk = async() => {
     let res = await editNote({
         title: data.form.title,
-        centent: data.form.centent,
+        content: data.form.content,
         cover_url: data.form.cover_url,
         status: data.form.status,
         id: data.form.id

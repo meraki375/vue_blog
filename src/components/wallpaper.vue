@@ -6,7 +6,7 @@
         <div><img src="../assets/images/bilibili/4.png"></div>
         <div><img src="../assets/images/bilibili/5.png"></div>
         <div><img src="../assets/images/bilibili/6.png"></div>
-        <template class="centent">
+        <template class="content">
             <a-space size="large">
                 <IconPark :type="props.form.icon" theme="outline" :size="'42px'" fill="#FFF"/>
                 <h1 style="font-size: 36px; color:#fff;">{{ props.form.title }}</h1>
@@ -16,6 +16,10 @@
                 <p>{{dayjs().diff(props.form.updatedAt,'day')  + "天前"}}</p>
                 <icon-tag style="margin: 10px;color: aliceblue;" />
                 <p>{{props.form.className}}</p>
+                <icon-message style="margin: 10px;color: aliceblue;" />
+                <p>{{props.form.comment_count || 0}} 条评论</p>
+                <icon-eye style="margin: 10px;color: aliceblue;" />
+                <p>{{props.form.browse_count || 0}} 次阅读</p>
             </div>
         </template>
     </header>
@@ -23,7 +27,7 @@
 </template>
 <script setup lang="ts" name="Wallpaper">
 import {IconPark} from '@icon-park/vue-next/es/all';
-import {onMounted, nextTick} from 'vue' 
+import {onMounted, nextTick} from 'vue'
 import dayjs from 'dayjs'
     onMounted(() => {
         nextTick(() => {
@@ -153,7 +157,7 @@ import dayjs from 'dayjs'
         transform: translatex(var(--offset));
         filter: blur(var(--blur));
     }
-    .centent{
+    .content{
         position: absolute;
         bottom: 10%;
         display: block;

@@ -1,6 +1,6 @@
 export interface ArticleForm {
   title: string
-  centent: string
+  content: string
   class: string
   status: number
 }

@@ -5,9 +5,9 @@
             :onlytitle=true
              >
         </wallpaper>
-        <div class="centent"> 
+        <div class="content"> 
             <Editor
-                :formKey="'centent'"
+                :formKey="'content'"
                 :form="data.form"
                 :readonly="true"
                 :disabled="true"
@@ -40,7 +40,7 @@ init()
 </script>
 
 <style lang="scss" scoped>
-.centent{
+.content{
     width: 70%;
     height: 100%;
     margin: 30px auto;

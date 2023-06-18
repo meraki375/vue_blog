@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <section class="login-box animated flipInY"> 
-      <div class="centent">
+      <div class="content">
         <a-form
           :model="form"
           :style="{ width: '84%' }"
@@ -50,8 +50,7 @@ import { useRouter } from 'vue-router'
 import { useLoading } from '@/hooks'
 import { Message } from '@arco-design/web-vue'
 import { useUserStore, useNavTabStore } from '@/store'
-import LoginBg from './components/LoginBg/index.vue' 
-import { register } from '@/apis'
+import LoginBg from './components/LoginBg/index.vue'
 const router = useRouter() 
 const userStore = useUserStore()
 const navTabStore = useNavTabStore()
@@ -136,7 +135,7 @@ const registering = async () => {
   }
 } 
 
-.centent {
+.content {
   width: 100%;
   height: 100%;
   background: var(--color-bg-1);

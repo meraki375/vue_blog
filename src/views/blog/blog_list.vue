@@ -42,23 +42,24 @@
               <template #icon>
                 <icon-bookmark />
               </template>
-              {{ record.classObj?.name }}
+              {{ record.className }}
             </a-tag>
           </template>  
         </a-table-column>
         <a-table-column title="文章标签" data-index="tabObj" :width="150" align="center">
           <template #cell="{ record }">
-            <a-space>
-              <a-tag :color="colors[index]" v-for="(item, index ) in record.tabObj">
-                <template #icon>
+            <a-space v-if="record.tabNames">
+              <a-tag :color="colors[index]" v-for="(item, index ) in record.tabNames.split(',')">
+                <template #icon >
                   <icon-subscribed />
                 </template>
-                {{ item.name }}
+                {{ item }}
               </a-tag>
             </a-space>
           </template>  
         </a-table-column>
         <a-table-column title="查看量" data-index="readCnt" :width="80" align="center"></a-table-column>
+        <a-table-column title="点赞量" data-index="likeNum" :width="80" align="center"></a-table-column>
         <a-table-column title="发布人" data-index="senderName" :width="150" align="center"></a-table-column>
         <a-table-column title="发送时间" data-index="updatedAt" :width="150" align="center">
           <template #cell="{ record }">
@@ -72,7 +73,7 @@
         </a-table-column> 
         <a-table-column title="上下架" :width="100" align="center">
           <template #cell="{ record }">
-            <a-switch v-model="record.status" size="medium">
+            <a-switch v-model="record.status" size="medium" :checked-value="1" :unchecked-value="0" @change="handleChangeIntercept(record.id,record.status)">
               <template #checked>上架</template>
               <template #unchecked>下架</template>
             </a-switch>
@@ -83,9 +84,8 @@
             <a-space>
               <a-button type="primary" size="mini" @click="onEdit(record.id)">修改</a-button>
               <a-button size="mini" @click="">详情</a-button>
-              <a-popconfirm type="warning" content="您确定要删除该项吗?">
-                <a-button type="primary" status="danger" size="mini">删除</a-button>
-              </a-popconfirm>
+              <a-button type="primary" status="danger" size="mini" @click="onDelete(record.id)" >删除</a-button>
+             
             </a-space>
           </template>
         </a-table-column>
@@ -98,9 +98,9 @@
 
 <script setup lang="ts" name="Blog">
 import { ref, reactive, getCurrentInstance } from 'vue'
-import { Message } from '@arco-design/web-vue'
+import { Message, Modal } from '@arco-design/web-vue'
 import { usePagination } from '@/hooks'
-import { getBlogList } from '@/apis'
+import { getBlogList, delBlog, blogStatus } from '@/apis'
 import {useRouter } from 'vue-router'
 import { colors } from '../../utils/common'
 const { proxy }: any = getCurrentInstance()
@@ -149,8 +149,34 @@ const onAdd = () => {
 const onEdit = (id:number) =>{
   return router.push({ path: '/blog/edit', query: { id: id }})
 }
-const onDelete = () => {
-  Message.info('点击了删除')
+const onDelete = (value: any) => {
+  Modal.info({
+    title: '给你个提示',
+    content: '是否确认删除咩?',
+    onOk: async () => {
+      let res = await delBlog({id: value})
+      if(res.code === 201){
+        getTableData()
+        Message.success(res.message)
+      }else{
+        Message.error(res.message)
+      }
+    }
+  });
+  
+}
+
+const handleChangeIntercept = async (id:any, status:any) => {
+  console.log(id,status);
+  let res = await blogStatus({id: id, status: status})
+  if(res.code === 201){
+    Message.success(res.message)
+    return getTableData()
+  }else{
+    Message.error(res.message)
+    return getTableData()
+  }
+  
 }
 
 const onImport = () => {

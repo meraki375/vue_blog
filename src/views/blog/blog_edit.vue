@@ -1,7 +1,7 @@
 <template>
   <div class="container" ref="containerRef">
-    <a-form :form="data.form" size="medium" :model="data.form" auto-label-width>
-      <a-form-item label="标题" :rules="rules.title">
+    <a-form  ref="form" :form="data.form" size="medium" :model="data.form" auto-label-width>
+      <a-form-item field="title" label="标题" :rules="rules.title">
         <a-input v-model="data.form.title" placeholder="请输入标题" />
       </a-form-item>
       <a-form-item label="简介" >
@@ -15,15 +15,15 @@
               uploadFolder="image"
           ></Mupload>
       </a-form-item>
-      <a-form-item label="内容" >
+      <a-form-item field="content" label="内容" :rules="rules.content">
         <Editor
-          :formKey="'centent'"
+          :formKey="'content'"
           :form="data.form"
           :container="containerRef"
         >
         </Editor>
       </a-form-item>
-      <a-form-item label="分类" >
+      <a-form-item field="classId" label="分类" :rules="rules.classId">
         <a-select v-model="data.form.classId"  placeholder="请选择分类" > 
           <a-option 
             v-for="item in options"
@@ -60,7 +60,7 @@
         </a-switch>
       </a-form-item>
         <a-space class="center">
-          <a-button type="primary" @click="next(data.form)">提交</a-button>
+          <a-button type="primary" @click="next()">提交</a-button>
           <a-button @click="router.back()">返回</a-button>
         </a-space>
     </a-form>
@@ -70,18 +70,19 @@
 <script setup lang="ts" name="Blog_edit">
 import { useUserStore } from '@/store'
 import { editBlog, getBlog, getClassList, getTabList } from '@/apis'
-import {  ref,reactive } from 'vue'
+import {  ref,reactive, getCurrentInstance } from 'vue'
 import {useRouter, useRoute } from 'vue-router'
 import { Message } from '@arco-design/web-vue'
 const id = useRoute().query.id
 const router = useRouter()
 const userStore:any = useUserStore().userInfo 
 const containerRef = ref() as any
+const { proxy }: any = getCurrentInstance()
 const data = reactive({
   form:{
     title: '',
     introduce:'',
-    centent: '', 
+    content: '', 
     classId:null,
     status:1,
     cover_url:'',
@@ -94,30 +95,37 @@ const data = reactive({
 const options = ref([] as any);
 
 const rules = {
-  title: [{ required: true, message: '请输入标题' }],
-  centent: [{ required: true, message: '请输入内容' }]
+  title: [{ required: true, message: '请输入标题', trigger: 'change'  }],
+  content: [{ required: true, message: '请输入内容', trigger: 'change'  }],
+  classId: [
+    { required: true, message: '请选择分类', trigger: 'change' },
+  ],
 }
 
-const next = async(form:any) => {
-  let params = {
-    id:id,
-    title: data.form.title,
-    introduce:data.form.introduce,
-    centent: data.form.centent, 
-    classId:data.form.classId,
-    status:data.form.status,
-    cover_url:data.form.cover_url,
-    senderName:userStore.username,
-    uid: userStore.id,
-    tabs: data.form.tabs.join(',')
-  } 
-  let res = await editBlog(params)
-  if(res.code === 201){
-    router.back()
-    Message.success(res.message)
-  }else{
-    Message.error(res.message)
-  }
+const next = () => {
+  proxy.$refs.form.validate(async(valid:any) => {
+    if(!valid){
+      let params = {
+          id:id,
+          title: data.form.title,
+          introduce:data.form.introduce,
+          content: data.form.content, 
+          classId:data.form.classId,
+          status:data.form.status,
+          cover_url:data.form.cover_url,
+          senderName:userStore.username,
+          uid: userStore.id,
+          tabs: data.form.tabs ? data.form.tabs.join(',') : ''
+        } 
+        let res = await editBlog(params)
+        if(res.code === 201){
+          router.back()
+          Message.success(res.message)
+        }else{
+          Message.error(res.message)
+        }
+    }
+  });
 }
 
 const init = async () =>{

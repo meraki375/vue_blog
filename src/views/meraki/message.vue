@@ -5,11 +5,11 @@
             :onlytitle=true
              >
         </wallpaper>
-        <div class="centent">
+        <div class="content">
             <div class="text-center ">
                 <Player id="五月天" autoplay class="player" listMaxHeight='100px'></Player>
                 <Editor
-                    :formKey="'centent'"
+                    :formKey="'content'"
                     :form="data.form"
                     :readonly="true"
                     :disabled="true"
@@ -47,7 +47,7 @@ init()
 </script>
 
 <style lang="scss" scoped>
-.centent{
+.content{
     width: 70%;
     height: 100%;
     margin: 30px auto;
