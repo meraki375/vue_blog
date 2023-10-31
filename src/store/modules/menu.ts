@@ -68,6 +68,14 @@ export const useMenuStore = defineStore({
         },
         {
           icon: 'menu-indicator',
+          id: 'TPGL',
+          name: '图片管理',
+          path: '/photo',
+          keepAlive: true,
+          hidden: false
+        },
+        {
+          icon: 'menu-indicator',
           id: 'SMGL',
           name: '声明管理',
           path: '/privacy',

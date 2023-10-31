@@ -1,1 +1,0 @@
-import{ak as e}from"./index.9e0cf28f.js";function i(t){return e.get("api/note/list",t)}function n(t){return e.post("api/note/edit",t)}function a(t){return e.delete("api/note/del",t)}export{a as d,n as e,i as g};

@@ -1,58 +1,45 @@
 <template>
   <a-card title="项目" :bordered="false" size="medium">
     <ul class="list">
-      <li class="list-item" v-for="item in list" :key="item.name">
+      <li class="list-item" v-for="item in data.list" :key="item.title">
         <div class="head">
-          <GiSvgIcon :size="30" :name="item.icon"></GiSvgIcon>
-          <span>{{ item.name }}</span>
+          <a-avatar shape="square">
+            <img
+              alt="avatar"
+              :src="item.cover_url"
+            />
+          </a-avatar>
+          <span>{{ item.title }}</span>
         </div>
-        <p class="text">{{ item.text }}</p>
-        <p class="desc">{{ item.time }}</p>
+        <p class="text">{{ item.content }}</p>
+        <div class="flex time">
+          <p class="desc">{{ dayjs(item.createAt).format('YYYY年MM月DD日') }}</p>
+          <a-statistic :value="item.progress" :value-from="0" :start="true" animation>
+            <template #prefix>
+              <icon-arrow-rise />
+            </template>
+            <template #suffix>%</template>
+          </a-statistic>
+        </div>
       </li>
     </ul>
   </a-card>
 </template>
 
 <script setup lang="ts">
-const list = [
-  {
-    name: 'Github',
-    text: '是一个面向开源及私有软件项目的托管平台',
-    time: '开源君，2021-07-04',
-    icon: 'item-github'
-  },
-  {
-    name: 'Vue',
-    text: '渐进式 JavaScript 框架',
-    time: '学不动也要学，2021-07-04',
-    icon: 'item-vue'
-  },
-  {
-    name: 'Html5',
-    text: 'HTML5是互联网的下一代标准',
-    time: '撸码也是一种艺术 2021-04-01',
-    icon: 'item-html5'
-  },
-  {
-    name: 'Angular',
-    src: '../../assets/images/home/angular.png',
-    text: '现代 Web 开发平台，百万粉丝热捧',
-    time: '铁粉君 2021-07-04',
-    icon: 'item-angular'
-  },
-  {
-    name: 'React',
-    text: '用于构建用户界面的 JavaScript 库',
-    time: '技术牛 2021-07-04',
-    icon: 'item-react'
-  },
-  {
-    name: 'Js',
-    text: '路是走出来的，而不是空想出来的',
-    time: '架构组 2021-07-04',
-    icon: 'item-js'
+import { ref, reactive, getCurrentInstance } from 'vue'
+import { getProjectList, } from '@/apis'
+import dayjs from 'dayjs'
+const props = defineProps({
+  list: {
+    type: Array,
+    default: []
   }
-]
+})
+const data = reactive({
+  list: props.list
+})
+
 </script>
 
 <style lang="scss" scoped>
@@ -60,7 +47,7 @@ const list = [
   display: flex;
   flex-wrap: wrap;
   .list-item {
-    // width: 33.33%;
+    width: 33.33%;
     flex: 1;
     min-width: 200px;
     color: var(--color-text-3);
@@ -87,8 +74,12 @@ const list = [
       margin-top: 10px;
       height: 50px;
     }
+    .time{
+      align-items: baseline;
+      justify-content: space-around;
+    }
     .desc {
-      font-size: 12px;
+      font-size: 1.125rem;
     }
   }
 }

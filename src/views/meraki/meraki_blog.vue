@@ -1,7 +1,7 @@
 <template>
     <div class="container" ref="containerRef" >
         <wallpaper :form="data.form"></wallpaper>
-        <div class="content "  >
+        <div class="content"  >
             <div style="text-align: center;font-size: 16px;">
                 <p>{{`提醒：本文已经超过${dayjs().diff(dayjs(data.form.updatedAt), 'day')}天未修改，其中某些信息可能已经过时，请谨慎使用！`}}</p>
                 <p>你似乎正在查看一篇很久远的文章。</p>
@@ -19,9 +19,9 @@
 
             </Editor>
             <Comment class="comment"  reaction></Comment>
-            <Footer></Footer>
+           
         </div>
-        
+        <Footer></Footer>
     </div>
 
 </template>
@@ -73,7 +73,7 @@ onActivated(() => {
     overflow-y: scroll;
 }
 .comment{
-    z-index: 999;
+    z-index: 1000;
     position: relative; 
     background: #fff;
 }

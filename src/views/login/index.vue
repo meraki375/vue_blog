@@ -1,45 +1,49 @@
 <template>
   <div class="login">
-    <section class="login-box animated flipInY">
-      <!-- 左侧 -->
-      <div class="login-left">
-        <img class="login-img" src="@/assets/svgs/login-img.svg" />
-      </div>
-      <!-- 右侧 -->
-      <div class="login-right">
-        <a-form
-          :model="form"
-          :style="{ width: '84%' }"
-          :label-col-style="{ display: 'none' }"
-          :wrapper-col-style="{ flex: 1 }"
-        >
-          <h3 class="login-form-title"><img class="logo" src="@/assets/images/logo.gif" /><span>Admin Pro</span></h3>
-          <a-form-item field="username">
-            <a-input v-model="form.username" placeholder="账号" size="medium" allow-clear>
-              <template #prefix><icon-user :stroke-width="1" :style="{ fontSize: '20px' }" /></template>
-            </a-input>
-          </a-form-item>
-          <a-form-item field="password">
-            <a-input-password v-model="form.password" placeholder="密码" size="medium" allow-clear>
-              <template #prefix><icon-lock :stroke-width="1" :style="{ fontSize: '20px' }" /></template>
-            </a-input-password>
-          </a-form-item>
-          <a-form-item>
-            <a-row justify="space-between" align="center" style="width: 100%">
-              <a-checkbox v-model="checked">记住密码</a-checkbox>
-              <a-link>忘记密码</a-link>
-            </a-row>
-          </a-form-item>
-          <a-form-item>
-            <a-space direction="vertical" fill style="width: 100%">
-              <a-button type="primary" size="large" long :loading="loading" @click="login">登录</a-button>
-              <a-button type="text" size="large" long class="register-btn" @click="router.push('/registered')" >注册账号</a-button>
-            </a-space>
-          </a-form-item>
-        </a-form>
-      </div>
-    </section>
-    <Footer></Footer>
+    <div style="z-index: 999">
+      <section class="login-box animated flipInY">
+      
+        <!-- 左侧 -->
+        <div class="login-left">
+          <img class="login-img" src="https://meraki-1313127528.cos.ap-guangzhou.myqcloud.com/picgo/%E5%BF%83%E6%B5%B7.jpg" />
+        </div>
+        <!-- 右侧 -->
+        <div class="login-right">
+          <a-form
+            :model="form"
+            :style="{ width: '84%' }"
+            :label-col-style="{ display: 'none' }"
+            :wrapper-col-style="{ flex: 1 }"
+          >
+            <h3 class="login-form-title"><img class="logo" src="@/assets/images/logo(2).webp" /><span>珊瑚宫传送点</span></h3>
+            <a-form-item field="username">
+              <a-input v-model="form.username" placeholder="账号" size="medium" allow-clear>
+                <template #prefix><icon-user :stroke-width="1" :style="{ fontSize: '20px' }" /></template>
+              </a-input>
+            </a-form-item>
+            <a-form-item field="password">
+              <a-input-password v-model="form.password" placeholder="密码" size="medium" allow-clear>
+                <template #prefix><icon-lock :stroke-width="1" :style="{ fontSize: '20px' }" /></template>
+              </a-input-password>
+            </a-form-item>
+            <a-form-item>
+              <a-row justify="space-between" align="center" style="width: 100%">
+                <!-- <a-checkbox v-model="checked">记住密码</a-checkbox> -->
+                <!-- <a-link>忘记密码凉拌咯</a-link> -->
+                <span>我是<span style="text-decoration:line-through;">神里凌华</span>心海的狗ヾ(≧▽≦*)o</span>
+              </a-row>
+            </a-form-item>
+            <a-form-item>
+              <a-space direction="vertical" fill style="width: 100%">
+                <a-button type="primary" size="large" long :loading="loading" @click="login">传送</a-button>
+                <!-- <a-button type="text" size="large" long class="register-btn" @click="router.push('/registered')" >注册账号</a-button> -->
+              </a-space>
+            </a-form-item>
+          </a-form>
+        </div>
+      </section>
+      <Footer class="login-footer"></Footer>
+    </div>
     <GiThemeBtn class="theme-btn"></GiThemeBtn>
 
     <LoginBg></LoginBg>
@@ -63,7 +67,7 @@ const form:any = reactive({
 })
 
 // 记住密码
-const checked = ref(false)
+// const checked = ref(false)
 // 登录加载
 const { loading, setLoading } = useLoading()
 const errorMessage = ref('')
@@ -135,7 +139,12 @@ const login = async () => {
     box-shadow: 0 2px 4px 2px rgba(0, 0, 0, 0.08);
   }
 }
-
+.login-footer{
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  color: var(--color-text-1);
+}
 .login-left {
   flex: 1;
   height: 100%;

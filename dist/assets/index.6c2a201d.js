@@ -1,1 +1,0 @@
-import{aj as d,ak as g}from"./index.9e0cf28f.js";const u=()=>g.get("api/getCOSToken",{}),S=async(s,t,c,l)=>{const e=await u(),a=new d({SecretId:e.AccessKeyId,SecretKey:e.AccessKeySecret});return new Promise((n,r)=>{a.uploadFile({Bucket:e.Bucket,Region:e.Region,Key:`${c}/${s}`,Body:t,StorageClass:"STANDARD"},(o,i)=>{o?r({code:500,msg:o}):n({code:200,msg:i})})})};export{S as u};

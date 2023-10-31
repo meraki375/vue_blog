@@ -4,7 +4,10 @@
   </a-config-provider>
 </template>
 
-<script setup lang="ts" name="App"></script>
+<script setup lang="ts" name="App">
+
+</script>
 <style>
   @import 'assets/main.css';
 </style>
+

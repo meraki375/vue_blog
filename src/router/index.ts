@@ -24,15 +24,10 @@ const routes: any = [
     name: 'Meraki',
     component: () => import('@/views/meraki/components/index.vue'),
     children: [
-      // {
-      //   path: '/meraki/home',
-      //   name: 'Mhome',
-      //   component: () => import('@/views/meraki/demo.vue'),
-      //   meta: { title: '首页', keepAlive: false }
-      // },
       {
         path: '/',
         name: '首页',
+        img_url: 'https://meraki-1313127528.cos.ap-guangzhou.myqcloud.com/picgo/xinhai1.gif?imageMogr2/format/webp',
         icon: '1cangchucangku',
         id: 'SY',
         component: () => import('@/views/meraki/home.vue'),
@@ -41,6 +36,7 @@ const routes: any = [
       {
         path: '/meraki/blog',
         name: '博客详情页',
+        img_url: 'https://meraki-1313127528.cos.ap-guangzhou.myqcloud.com/picgo/xinhai2.gif?imageMogr2/format/webp',
         hidden: true,
         component: () => import('@/views/meraki/meraki_blog.vue'),
         meta: { title: '博客详情页', keepAlive: true },
@@ -52,6 +48,7 @@ const routes: any = [
       {
         path: '/meraki/table',
         name: '留言表',
+        img_url: 'https://meraki-1313127528.cos.ap-guangzhou.myqcloud.com/picgo/xinhai3.gif?imageMogr2/format/webp',
         icon: '1dingdan',
         id: 'LYB',
         component: () => import('@/views/meraki/message.vue'),
@@ -60,6 +57,7 @@ const routes: any = [
       {
         path: '/meraki/time',
         name: '时间线',
+        img_url: 'https://meraki-1313127528.cos.ap-guangzhou.myqcloud.com/picgo/xinhai4.gif?imageMogr2/format/webp',
         icon: '1shijianchuo',
         id: 'SJX',
         component: () => import('@/views/meraki/timeline.vue'),
@@ -68,6 +66,7 @@ const routes: any = [
       {
         path: '/meraki/plan',
         name: '开发计划',
+        img_url: 'https://meraki-1313127528.cos.ap-guangzhou.myqcloud.com/picgo/xinhai5.gif?imageMogr2/format/webp',
         icon: '1linghuokuozhan',
         id: 'KFJH',
         component: () => import('@/views/meraki/home.vue'),
@@ -76,6 +75,7 @@ const routes: any = [
       {
         path: '/meraki/wall',
         name: '表白墙',
+        img_url: 'https://meraki-1313127528.cos.ap-guangzhou.myqcloud.com/picgo/xinhai6.gif?imageMogr2/format/webp',
         icon: '1gongyi',
         id: 'BBQ',
         component: () => import('@/views/meraki/home.vue'),
@@ -84,6 +84,7 @@ const routes: any = [
       {
         path: '/meraki/note',
         name: '随手小记',
+        img_url: 'https://meraki-1313127528.cos.ap-guangzhou.myqcloud.com/picgo/xinhai7.gif?imageMogr2/format/webp',
         icon: '1wendang',
         id: 'SSXJ',
         component: () => import('@/views/meraki/note.vue'),
@@ -92,6 +93,7 @@ const routes: any = [
       {
         path: '/meraki/statement',
         name: '本站声明',
+        img_url: 'https://meraki-1313127528.cos.ap-guangzhou.myqcloud.com/picgo/xinhai8.gif?imageMogr2/format/webp',
         icon: '1banquan',
         id: 'BZSM',
         component: () => import('@/views/meraki/privacy.vue'),
@@ -100,6 +102,7 @@ const routes: any = [
       {
         path: '/login',
         name: 'Login',
+        img_url: 'https://meraki-1313127528.cos.ap-guangzhou.myqcloud.com/picgo/xinhai9.gif?imageMogr2/format/webp',
         icon: '1banquan',
         component: () => import('@/views/login/index.vue'),
         meta: { title: '登录', keepAlive: false }

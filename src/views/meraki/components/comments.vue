@@ -33,7 +33,7 @@
                                 </a>
                             </template>
                             <template #content>
-                            <div v-html="item.comment"></div>
+                            <div v-html="richTextContainer(item.comment)"></div>
                             </template>
                         </a-comment>
                     </a-list-item>
@@ -72,17 +72,12 @@
         </template>
         <a-space :size="32" style="padding: 0 10px;">
             <a-avatar-group>
-                <a-avatar  v-for="item in data.userList" shape="circle">
-                    <a :href="'http://' + item.link" target="_blank">
-                        <a-tooltip  position="tl" :content="item.nick" :background-color="getRandomColor()">
-                            
-                                <img
-                                    alt="avatar"
-                                    :src="item.avatar"
-                                />
-                            
-                        </a-tooltip>
-                    </a>
+                <a-avatar  v-for="item in data.userList" shape="circle"> 
+                    <img
+                        alt="avatar"
+                        :src="item.avatar"
+                        style="border-radius: 50%;"
+                    />
                 </a-avatar>
             </a-avatar-group>
         </a-space>
@@ -90,15 +85,14 @@
     </a-tabs>
 </template>
 <script setup lang="ts">
-import { computed, ref, reactive, nextTick  } from 'vue';
+import { getCurrentInstance, ref, reactive, nextTick  } from 'vue';
 import '@waline/client/dist/waline.css';
 import { getconmentList, getrankList } from '@/apis'
 import { getTimeDifferenceString } from '../../../utils/common'
 import { useLikeStore } from '@/store'
 import {useRouter } from 'vue-router'
-import { getRandomColor } from '../../../utils/common'
 const router = useRouter()
-
+const { proxy }: any = getCurrentInstance()
 const props: any = defineProps({
     commentCount: { //总评论数
         type: Number,
@@ -178,8 +172,20 @@ const navigateToBlog = (url:string) => {
     router.push({ path: '/meraki/blog', query: { id: id } });
 }
 
+const richTextContainer = (text:any) =>{
+    console.log(text);
+    
+    const newText = text.replace(/class="wl-emoji"/g, 'style="max-width: 20px; max-height: 20px;"');
+    console.log(newText);
+    
+    return newText
+}
+
 </script>
 <style scoped>
-
+.rich-text img.wl-emoji {
+  max-width: 20px;
+  max-height: 20px;
+}
 
 </style>

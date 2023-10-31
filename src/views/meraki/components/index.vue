@@ -1,9 +1,7 @@
 <template>
   <a-layout class="layout">
     <Aside></Aside>
-    <a-layout>
-      <Main></Main> 
-    </a-layout>
+    <Main></Main> 
   </a-layout>
   
 </template>

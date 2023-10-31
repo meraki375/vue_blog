@@ -21,7 +21,8 @@
           </a-carousel>
           <div class="top">
             <p id="hitokoto">
-              <hitokoto />
+              <!-- <hitokoto /> -->
+              心海瘾犯了
             </p>
             <div class="iconList">
               <div v-for="item in iconList">
@@ -204,8 +205,8 @@ import dayjs from 'dayjs'
 const router = useRouter()
 
 const iconList =[
-  {icon:'微信',code:'#icon-weixin',image_url:'https://i.hd-r.cn/77c6b389abedf254e6f3416484bd1047.jpg'},
-  {icon:'QQ',code:'#icon-QQ',image_url:'https://i.hd-r.cn/ff83d583cb5c4f2c26f9b6f2db579372.jpg'},
+  {icon:'微信',code:'#icon-weixin',image_url:'https://meraki-1313127528.cos.ap-guangzhou.myqcloud.com/picgo/wexin.jpeg'},
+  {icon:'QQ',code:'#icon-QQ',image_url:'https://meraki-1313127528.cos.ap-guangzhou.myqcloud.com/picgo/qq.jpeg'},
   {icon:'知乎',code:'#icon-zhihu',url:'https://www.zhihu.com/people/xiao-bo-bo-66-23'},
   {icon:'GitHub',code:'#icon-github',url:'https://github.com/meraki375'},
   {icon:'bilibil',code:'#icon-bilibili',url:'https://space.bilibili.com/16445532'},
@@ -312,10 +313,10 @@ onActivated(() => {
 </script>
 
 <style lang="scss" scoped>
-@font-face {
-  font-family: 'qfont';
-  src: url('../../assets/font/Qfont.ttf');
-}
+// @font-face {
+//   font-family: 'qfont';
+//   src: url('https://meraki-1313127528.cos.ap-guangzhou.myqcloud.com/picgo/Qfont.woff2');
+// }
 .icon {
   width: 1em;
   height: 1em;
@@ -336,7 +337,10 @@ onActivated(() => {
 .home{
   width:100%;
   height:100%;
-  overflow-y: auto;
+  overflow-y: scroll;
+}
+.home::-webkit-scrollbar {
+  width: 0px; /* 滚动条宽度 */
 }
 .background{
   width:100%;

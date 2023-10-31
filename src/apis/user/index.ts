@@ -15,3 +15,9 @@ export function logout() {
 export function register(data: UserLoginParams) {
   return axios.post('api/auth/register', data)
 }
+
+
+/** @desc 统计登录 */
+export function offline(data: any) {
+  return axios.post('/api/user/stat/offline', data)
+}

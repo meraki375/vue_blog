@@ -61,7 +61,7 @@ init()
     width: 100%;
 }
 .comment{
-    z-index: 999;
+    z-index: 99;
     position: relative; 
     background: #fff;
 }

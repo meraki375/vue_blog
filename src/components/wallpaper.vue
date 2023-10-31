@@ -1,11 +1,11 @@
 <template>
     <header>
         <div class="img"><img src="../assets/images/bilibili/1.png"></div>
-        <div><img src="../assets/images/bilibili/2.png"></div>
-        <div><img src="../assets/images/bilibili/3.png"></div>
-        <div><img src="../assets/images/bilibili/4.png"></div>
-        <div><img src="../assets/images/bilibili/5.png"></div>
-        <div><img src="../assets/images/bilibili/6.png"></div>
+        <div><img class="bilibili" src="../assets/images/bilibili/2.png"></div>
+        <div><img class="bilibili" src="../assets/images/bilibili/3.png"></div>
+        <div><img class="bilibili" src="../assets/images/bilibili/4.png"></div>
+        <div><img class="bilibili" src="../assets/images/bilibili/5.png"></div>
+        <div><img class="bilibili" src="../assets/images/bilibili/6.png"></div>
         <template class="content">
             <a-space size="large">
                 <IconPark :type="props.form.icon" theme="outline" :size="'42px'" fill="#FFF"/>
@@ -95,7 +95,8 @@ import dayjs from 'dayjs'
 
 
             //启动定时器 眨眼睛效果
-            const imgs = document.querySelectorAll('img');
+            const imgs = document.querySelectorAll('.bilibili');
+            
             setInterval(() => {
                 setTimeout(() => {
                     imgs[1].src = 'https://xwmusicdata.oss-accelerate.aliyuncs.com/zyguitartest/cover/20230330185359.png';
