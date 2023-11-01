@@ -1,12 +1,20 @@
 kind: pipeline
-type: exec
-name: default
-
-platform:
-  os: linux
-  arch: amd64
-
+type: docker
+name: build
 steps:
-- name: greeting
-  commands:
-  - /bin/sh -c "echo 'Hello, World!'"
+
+- name: 同步文件
+  image: drillster/drone-rsync
+  settings:
+    user: root
+    key:
+      from_secret: ssh_key
+    hosts:
+      - 106.55.224.41
+    # 来源项目目录
+    source: ./dist/*
+    # 目标服务器目录
+    target: /www/wwwroot/www/vue_blog
+    script:
+      - cd /www/wwwroot/www/vue_blog
+      - ls
