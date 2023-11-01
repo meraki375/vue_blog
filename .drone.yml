@@ -1,8 +1,10 @@
 kind: pipeline
-name: vue_bolg
-type: exec
+type: docker
+name: default
+
 steps:
-  - name: pull
-    commands:
-      - sudo rsync -a ./ /www/wwwroot/vue_blog
-      - sudo chmod a+x /www/wwwroot/vue_blog
+- name: greeting
+  image: alpine
+  commands:
+  - echo hello
+  - echo world
