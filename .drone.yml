@@ -4,9 +4,9 @@ type: exec
 steps:
   - name: pull
     commands:
-      - sudo rsync -a ./ /www/wwwroot/vue_blog
+      - sudo -E rsync -a ./ /www/wwwroot/vue_blog
       - echo "Code copied successfully"
-      - sudo chmod a+x /www/wwwroot/vue_blog
+      - sudo -E chmod a+x /www/wwwroot/vue_blog
       - echo "Permissions updated"
     when:
       branch:
