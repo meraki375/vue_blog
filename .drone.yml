@@ -1,6 +1,7 @@
 kind: pipeline
-type: exec
+type: docker
 name: greeting
+
 steps:
 - name: en
   commands:
