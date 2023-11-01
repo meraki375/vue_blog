@@ -20,7 +20,7 @@
           class="search-btn" 
           type="text" 
           size="30" 
-          placeholder="搜索。。。" 
+          placeholder="搜索" 
           autocomplete="off" 
           @focus="data.toggleDrawerStyle = true"
           @blur="data.toggleDrawerStyle = false"
