@@ -18,7 +18,7 @@
     </a-affix>
     <section class="item">
       <a-descriptions title="基本信息" size="small">
-        <a-descriptions-item label="编号">Lin</a-descriptions-item>
+        <a-descriptions-item label="编号">Lin我i什么</a-descriptions-item>
         <a-descriptions-item label="消息标题">男</a-descriptions-item>
         <a-descriptions-item label="查看量">07月16日</a-descriptions-item>
         <a-descriptions-item label="发布人">广州市</a-descriptions-item>
