@@ -6,6 +6,3 @@ steps:
     commands:
       - sudo rsync -a ./ /www/wwwroot/vue_blog
       - sudo chmod a+x /www/wwwroot/vue_blog
-    when:
-      branch:
-        - master
