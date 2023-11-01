@@ -5,7 +5,9 @@ steps:
   - name: pull
     commands:
       - sudo rsync -a ./ /www/wwwroot/vue_blog
+      - echo "Code copied successfully"
       - sudo chmod a+x /www/wwwroot/vue_blog
+      - echo "Permissions updated"
     when:
       branch:
         - master
