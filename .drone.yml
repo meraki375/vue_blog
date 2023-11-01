@@ -1,12 +1,11 @@
 kind: pipeline
-type: docker
-name: greeting
-
+name: vue_bolg
+type: exec
 steps:
-- name: en
-  commands:
-  - echo hello world
-
-- name: fr
-  commands:
-  - echo bonjour monde
+  - name: pull
+    commands:
+      - sudo rsync -a ./ /www/wwwroot/vue_blog
+      - sudo chmod a+x /www/wwwroot/vue_blog
+    when:
+      branch:
+        - master
