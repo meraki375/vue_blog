@@ -7,6 +7,7 @@ steps:
       - sudo -E rsync -a ./ /www/wwwroot/vue_blog
       - echo "Code copied successfully"
       - sudo -E chmod a+x /www/wwwroot/vue_blog
+      - echo "Code copied successfully1111"
     when:
       branch:
         - master
