@@ -14,7 +14,7 @@ steps:
     # 来源项目目录
     source: ./dist/*
     # 目标服务器目录
-    target: /www/wwwroot/www/vue_blog
+    target: /www/wwwroot/vue_blog
     script:
-      - cd /www/wwwroot/www/vue_blog
+      - cd /www/wwwroot/vue_blog
       - ls
