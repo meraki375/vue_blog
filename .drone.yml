@@ -1,13 +1,14 @@
 kind: pipeline
-name: vue_bolg
-type: exec
+type: docker
+name: greeting
+
 steps:
-  - name: pull
-    commands:
-      - sudo -E rsync -a ./ /www/wwwroot/vue_blog
-      - echo "Code copied successfully"
-      - sudo -E chmod a+x /www/wwwroot/vue_blog
-      - echo "Code copied successfully1111"
-    when:
-      branch:
-        - master
+- name: en
+  image: alpine
+  commands:
+  - echo hello world
+
+- name: fr
+  image: alpine
+  commands:
+  - echo bonjour monde
