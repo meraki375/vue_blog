@@ -10,7 +10,7 @@ steps:
     key:
       from_secret: ssh_key1
     hosts:
-      - 106.55.224.41:8611
+      - 106.55.224.41
     # 来源项目目录
     source: ./dist/*
     # 目标服务器目录
