@@ -22,7 +22,7 @@
           <div class="top">
             <p id="hitokoto">
               <!-- <hitokoto /> -->
-              转后端了，前端已死！！！
+              转后端了，前端已死！
             </p>
             <div class="iconList">
               <div v-for="item in iconList">
