@@ -1,1 +1,0 @@
-import{d as e,b as _,c as n,n as o,_ as s}from"./index.41fbb4ad.js";const a=e({name:"GiDot"}),p=e({...a,props:{type:{type:String,default:"primary"}},setup(t){return(c,r)=>(_(),n("span",{class:o(["gi-dot gi-dot-processing",`gi-dot-${t.type}`])},null,2))}});const l=s(p,[["__scopeId","data-v-9b66e534"]]);export{l as _};
