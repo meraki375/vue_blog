@@ -8,7 +8,7 @@ steps:
   settings:
     user: root
     key:
-      from_secret: ssh_password
+      from_secret: ssh_key1
     hosts:
       - 43.139.205.214
     # 来源项目目录
