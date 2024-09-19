@@ -3,8 +3,8 @@ type: docker
 name: default
 
 steps:
-  - name: greeting
+  - name: print-strings
     image: alpine
     commands:
-      - echo hello1
-      - echo world1
+      - echo "Hello, Drone!"
+      - echo "This is a test script."
