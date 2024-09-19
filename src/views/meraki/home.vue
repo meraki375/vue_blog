@@ -22,7 +22,7 @@
           <div class="top">
             <p id="hitokoto">
               <!-- <hitokoto /> -->
-              永远对知识有追求心444556667777888999
+              永远对知识有追求心4445566677778889991010
             </p>
             <div class="iconList">
               <div v-for="item in iconList">
